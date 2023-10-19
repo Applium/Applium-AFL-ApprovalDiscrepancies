@@ -1,0 +1,24 @@
+<core:FragmentDefinition
+	xmlns="sap.ui.comp.valuehelpdialog"
+	xmlns:core="sap.ui.core"
+	xmlns:filterbar="sap.ui.comp.filterbar">
+
+	<ValueHelpDialog
+		title="{/#DocumentItemType/ImputationCenter/@sap:label}"
+		busy="{appView>/busyVH}"
+		ok=".onOkVHImputationCenter"
+		cancel=".onCancelVHImputationCenter"
+		afterClose="onAfterCloseVHImputationCenter"
+		supportMultiselect="false"
+		key="ImputationCenter"
+		descriptionKey="ImputationCenter" >
+		<filterBar>
+			<filterbar:FilterBar
+				search=".onSearchVHImputationCenter"
+				showFilterConfiguration="false"
+				showGoOnFB="false" >
+			</filterbar:FilterBar>
+		</filterBar>
+
+	</ValueHelpDialog>
+</core:FragmentDefinition>

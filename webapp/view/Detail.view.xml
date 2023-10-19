@@ -1,0 +1,435 @@
+<mvc:View
+	controllerName="fr.applium.afl.aflapproval.controller.Detail"
+	xmlns="sap.m"
+	xmlns:uxap="sap.uxap"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:commons="sap.suite.ui.commons">
+
+	<uxap:ObjectPageLayout 
+		busy="{detailView>/busy}"
+		busyIndicatorDelay="0"
+		showAnchorBar="true"
+		showAnchorBarPopover="true"
+		upperCaseAnchorBar="false"
+		enableLazyLoading="true"
+		subSectionLayout="TitleOnTop"
+		sectionTitleLevel="Auto"
+		useIconTabBar="false"
+		showHeaderContent="true"
+		useTwoColumnsForLargeScreen="false"
+		showTitleInHeaderContent="false"
+		showOnlyHighImportance="false"
+		isChildPage="false"
+		alwaysShowContentHeader="false"
+		headerContentPinnable="true"
+		toggleHeaderOnTitleClick="true"
+		preserveHeaderStateOnScroll="false"
+		showEditHeaderButton="false"
+		flexEnabled="true"
+		showFooter="true">
+
+		<uxap:headerTitle>
+			<uxap:ObjectPageHeader
+				objectTitle="{
+					path: 'DocumentId',
+					type: 'sap.ui.model.odata.type.String',
+					constraints: {
+						isDigitSequence: true,
+						maxLength: 12
+					}
+				}"
+				objectSubtitle=""
+				isObjectTitleAlwaysVisible="true"
+				isActionAreaAlwaysVisible="true"
+				headerDesign="Light"
+				showTitleSelector="false"
+				markFavorite="false"
+				markFlagged="false"
+				showMarkers="false"
+				markLocked="false"
+				showPlaceholder="false"
+				markChanges="false">
+
+				<uxap:actions>
+					<uxap:ObjectPageHeaderActionButton
+                		type="Emphasized"
+						enabled="{= !!${to_DocumentPDF/DocumentId} }"
+						text="{i18n>Detail.Header.ShowPDF}"
+						icon="sap-icon://pdf-attachment"
+						visible="{path: 'appView>/layout', formatter: '.formatter.detailCloseBtnVisible'}"
+						press=".onPressShowPDF" />
+
+					<uxap:ObjectPageHeaderActionButton
+                		type="Transparent"
+						icon="sap-icon://full-screen"
+                        visible="{parts: ['device>/system/phone', 'appView>/layout'], formatter: '.formatter.detailFullScreenBtnVisible'}"
+						press=".onPressFullScreen" />
+
+					<uxap:ObjectPageHeaderActionButton
+                		type="Transparent"
+						icon="sap-icon://exit-full-screen"
+                        visible="{parts: ['device>/system/phone', 'appView>/layout'], formatter: '.formatter.detailExitFullScreenBtnVisible'}"
+						press=".onPressFullScreen" />
+						
+					<uxap:ObjectPageHeaderActionButton
+                		type="Transparent"
+						tooltip="{i18n>Detail.Header.Close}"
+						icon="sap-icon://decline"
+						visible="{path: 'appView>/layout', formatter: '.formatter.detailCloseBtnVisible'}"
+						press=".onPressCloseDetail" />
+				</uxap:actions>
+
+			</uxap:ObjectPageHeader>
+		</uxap:headerTitle>
+
+		<uxap:headerContent>
+            <l:VerticalLayout>
+						<Label 
+							text="{/#DocumentType/Vendor/@sap:label}"
+							visible="{= !!${Vendor}}" />
+						<Text 
+							text="{Vendor}"
+							visible="{= !!${Vendor}}" />
+			</l:VerticalLayout>
+            <l:VerticalLayout>
+						<Label 
+							text="{/#DocumentType/OnBehalfOf/@sap:label}"
+							visible="{= !!${OnBehalfOf}}" />
+						<Text 
+							text="{OnBehalfOf}"
+							visible="{= !!${OnBehalfOf}}" />
+			</l:VerticalLayout> 
+			<l:VerticalLayout>
+						<Label 
+							text="{/#DocumentType/DocumentReference/@sap:label}"
+							visible="{= !!${DocumentReference}}" />
+						<Text 
+							text="{DocumentReference}"
+							visible="{= !!${DocumentReference}}" />
+			</l:VerticalLayout>
+            <l:VerticalLayout>
+				<Label 
+					text="{/#DocumentType/NetAmount/@sap:label}" />
+				<ObjectNumber 
+					number="{
+						parts: ['NetAmount', 'DocumentCurrency'],
+						type: 'sap.ui.model.type.Currency',
+						formatOptions: {showMeasure: false}
+					}"
+					unit="{DocumentCurrency}"/>
+
+			</l:VerticalLayout>
+			<l:VerticalLayout>
+						<Label 
+							text="{/#DocumentType/DueDate/@sap:label}"
+							visible="{= !!${DueDate}}" />
+						<Text 
+							text="{
+								path: 'DueDate',
+								type: 'sap.ui.model.type.Date',
+								formatOptions: {
+									style: 'medium'
+								}}"
+							visible="{= !!${DueDate}}" />
+
+			</l:VerticalLayout>
+		</uxap:headerContent>
+
+		<uxap:sections>
+			<uxap:ObjectPageSection
+				showTitle="true"
+				titleUppercase="false"
+				title="{i18n>Detail.Section.GeneralInformation}" >
+
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection
+						titleUppercase="false"
+						title="{i18n>Detail.Section.GeneralInformation}" >
+
+						<uxap:blocks>
+							<f:SimpleForm
+								editable="false"
+								layout="ColumnLayout"
+								columnsM="2"
+								columnsL="3"
+								columnsXL="4" >
+								<Label 
+									text="{/#DocumentType/Vendor/@sap:label}"
+									visible="{= !!${Vendor}}" />
+								<Text 
+									text="{VendorName} ({Vendor})"
+									visible="{= !!${Vendor}}" />
+								<Label 
+									text="{/#DocumentType/PurchasingDocument/@sap:label}"
+									visible="{= !!${PurchasingDocument}}" />
+								<Text 
+									text="{PurchasingDocument}"
+									visible="{= !!${PurchasingDocument}}" />
+								<Label 
+									text="{/#DocumentType/RemainingToInvoice/@sap:label}" />
+								<ObjectNumber 
+									number="{
+										parts: ['RemainingToInvoice', 'DocumentCurrency'],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{DocumentCurrency}" />
+									<Label 
+									text="{/#DocumentType/CrAmnt/@sap:label}" />
+								<ObjectNumber 
+									number="{
+										parts: ['CrAmnt', 'DocumentCurrency'],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{DocumentCurrency}" />
+									<Label 
+									text="{/#DocumentType/CrAmntRec/@sap:label}" />
+								<ObjectNumber 
+									number="{
+										parts: ['CrAmntRec', 'DocumentCurrency'],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{DocumentCurrency}" />
+								<Label 
+									text="{/#DocumentType/Author/@sap:label}"
+									visible="{= !!${Author}}" />
+								<Text 
+									text="{AuthorName} ({Author})"
+									visible="{= !!${Author}}" />
+								<Label
+									text="{i18n>Master.Table.NetAmount}" />
+								<ObjectNumber 
+									number="{
+										parts: ['NetAmount', 'DocumentCurrency'],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{DocumentCurrency}" />
+								<Label 
+									text="{/#DocumentType/PrincipalAgent/@sap:label}"
+									visible="{= !!${PrincipalAgent}}" />
+								<Text 
+									text="{PrincipalAgentName} ({PrincipalAgent})"
+									visible="{= !!${PrincipalAgent}}" />
+							</f:SimpleForm>
+						</uxap:blocks>
+
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+
+			</uxap:ObjectPageSection>
+			
+			<uxap:ObjectPageSection
+				showTitle="true"
+				titleUppercase="false"
+				title="{i18n>Detail.Section.Items}" >
+
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection
+						titleUppercase="false"
+						title="{i18n>Detail.Section.Items}" >
+
+						<uxap:blocks>
+							<Table
+								items="{detailView>/documentItems}"
+								mode="displayOnly"
+								 >
+								<!-- <headerToolbar>
+									<OverflowToolbar>
+										<content>
+											<ObjectStatus 
+												title="{i18n>Detail.Items.AddItem.Sold}"
+												text="{detailView>/soldAmount} {DocumentCurrency}"
+												state="{
+													path: 'detailView>/soldAmount',
+													formatter: '.formatter.soldState'
+												}"/>
+										</content>
+									</OverflowToolbar>
+								</headerToolbar> -->
+								<columns>
+									<Column>
+										<Text
+											text="{/#DocumentItemType/PurchasingDocument/@sap:label}" />
+									</Column>
+									<Column>
+										<Text
+											text="{/#DocumentItemType/PurchasingDocumentItem/@sap:label}" />
+									</Column>
+									<Column>
+										<Text
+											text="{/#DocumentItemType/DocumentItemId/@sap:label}" />
+									</Column>
+									<Column>
+										<Text
+											text="{/#DocumentItemType/Bednr/@sap:label}" />
+									</Column>
+									<Column
+										demandPopin="true"
+										minScreenWidth="Tablet">
+										<Text
+											text="{/#DocumentItemType/AmountInDocCurrency/@sap:label}" />
+									</Column>
+									<Column>
+										<Text
+											text="{/#DocumentItemType/DescriptionItem/@sap:label}" />
+									</Column>
+									<Column
+										demandPopin="true"
+										minScreenWidth="Tablet">
+										<Text
+											text="{/#DocumentItemType/AmountPostedItem/@sap:label}" />
+									</Column>	
+									<Column
+										demandPopin="true"
+										minScreenWidth="Tablet">
+										<Text
+											text="{/#DocumentItemType/RemainingToInvoiceItem/@sap:label}" />
+									</Column>
+									
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+											<ObjectIdentifier
+												title="{detailView>PurchasingDocument}"
+												/>
+											<Label	text="{detailView>PurchasingDocumentItem}" />
+											<Label
+												text="{detailView>DocumentItemId}"
+											 />
+											<Label
+												text="{detailView>Bednr}"
+											 />
+											<Label
+												text="{detailView>AmountInDocCurrency} {DocumentCurrency}"
+												type="Number"
+												description="{DocumentCurrency}"
+												maxLength="20"
+											/>
+											<Label
+												text="{detailView>DescriptionItem}"
+											/>
+											<Label
+												text="{detailView>AmountPostedItem} {DocumentCurrency}"
+											/>
+											<Label
+												text="{detailView>RemainingToInvoiceItem} {DocumentCurrency}"
+											 />
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</uxap:blocks>
+
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+
+			</uxap:ObjectPageSection>
+			<!-- History Section -->
+			<uxap:ObjectPageSection 
+				showTitle="true"
+				titleUppercase="false"
+				title="{i18n>Detail.Section.History}">
+
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection
+						titleUppercase="false" 
+						title="{i18n>Detail.Section.History}">
+
+						<uxap:blocks>
+							<VBox
+								width="100%" >
+								<FeedInput
+									post=".onPostComment"
+									icon="sap-icon://employee"
+									value="{detailView>/newComment}"
+									rows="3"
+									maxLength="1000" />
+								<List
+									items="{
+										path: 'to_DocumentComment',
+										sorter: [
+											{
+												path: 'LogDatetime',
+												descending: true
+											}
+										]
+									}">
+									<FeedListItem
+										sender="{LogAgentName}"
+										senderActive="false"
+										icon="sap-icon://employee"
+										iconActive="false"
+										timestamp="{
+											path: 'LogDatetime', 
+											type: 'sap.ui.model.type.DateTime',
+											formatOptions: {
+												style: 'medium',
+												UTC: true
+											}
+										}"
+										text="{
+											path:'LogComment',
+											formatter: '.formatter.addNewLineBefore'
+										}" />
+								</List>
+							</VBox>
+						</uxap:blocks>
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+			</uxap:ObjectPageSection>
+		</uxap:sections>
+
+		<uxap:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer />
+				<Button
+					type="Accept"
+					text="{i18n>Detail.Footer.Validate}"
+					visible="{= ${StatutWf} === true ? false : true }"
+					tooltip="{i18n>Detail.Footer.ValidateTooltip}"
+					press=".onPressValidate" />
+				<Button
+					type="Reject"
+					text="{i18n>Detail.Footer.Reject}"
+					visible="{= ${StatutWf} === true ? false : true }"
+					tooltip="{i18n>Detail.Footer.RejectTooltip}"
+					press=".onPressReject" />
+				<Button
+					type="Default"
+					text="{i18n>Detail.Footer.Save}"
+					visible="{detailView>/changes}"
+					enabled="{detailView>/saveEnabled}"
+					tooltip="{i18n>Detail.Footer.SaveTooltip}"
+					press=".onPressSave" />
+				<Button
+					type="Default"
+					text="{i18n>Detail.Footer.Cancel}"
+					visible="{detailView>/changes}"
+					tooltip="{i18n>Detail.Footer.CancelTooltip}"
+					press=".onPressCancel" />
+				<Button
+					type="Default"
+					text="{i18n>Detail.Footer.Refer}"
+					visible="{StatutWf}"
+					tooltip="{i18n>Detail.Footer.ReferTooltip}"
+					press=".onPressRefer" />
+				<Button
+					type="Default"
+					text="{i18n>Detail.Footer.Transfer}"
+					visible="{= ${StatutWf} === true ? false : true }"
+					tooltip="{i18n>Detail.Footer.TransferTooltip}"
+					press=".onPressTransfer" />
+			</OverflowToolbar>
+		</uxap:footer>
+
+	</uxap:ObjectPageLayout>
+
+</mvc:View>
+

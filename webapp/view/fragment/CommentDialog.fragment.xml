@@ -1,0 +1,35 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<Dialog
+		title="{= ${appView>/sActionSource} === 'Reject' ? ${i18n>App.Comment.Title.Reject} : ${i18n>App.Comment.Title.Validate}}"
+		type="Message"
+		 >
+		<content>
+			<MessageStrip
+				text="{= ${appView>/sActionSource} === 'Reject' ? ${i18n>App.Comment.Warning} : ${i18n>App.Comment.Info}}"
+				type="{= ${appView>/sActionSource} === 'Reject' ? 'Warning' : 'Information'}"
+				showIcon="true"
+				showCloseButton="false" />
+			<TextArea
+				width="50em"
+				rows="5"
+				placeholder=""
+				maxLength="1000"
+				valueLiveUpdate="true"
+				value="{appView>/comment/value}" />
+		</content>
+		<beginButton>
+			<Button
+				text="{i18n>App.Comment.Submit}"
+				enabled="{= ${appView>/sActionSource} === 'Reject' ? !!${appView>/comment/value} : true}"
+				press=".onPressSubmitComment" />
+		</beginButton>
+		<endButton>
+			<Button
+				text="{i18n>App.Comment.Cancel}"
+				press=".onPressCancelComment" />
+		</endButton>
+
+	</Dialog>
+</core:FragmentDefinition>

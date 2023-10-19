@@ -1,0 +1,134 @@
+<mvc:View
+    controllerName="fr.applium.afl.aflapproval.controller.Master"
+    xmlns="sap.m"
+    xmlns:semantic="sap.f.semantic"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smartvariants="sap.ui.comp.smartvariants"
+	xmlns:smartfilterbar="sap.ui.comp.smartfilterbar"
+	xmlns:smarttable="sap.ui.comp.smarttable"
+    xmlns:core="sap.ui.core" 
+    xmlns:f="sap.f"
+	height="100%">
+
+<f:DynamicPage id="dynamicPage">
+		<f:title>
+			<f:DynamicPageTitle id ="dynamicPageTitle">
+				<f:heading>
+					<smartvariants:SmartVariantManagement 
+						id="masterSmartVariant"
+						persistencyKey="masterSmartVariantManagement"/>
+				</f:heading>
+				<f:snappedContent>
+				</f:snappedContent>
+				<f:content>
+				</f:content>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader id="dynamicPageHeader">
+				<smartfilterbar:SmartFilterBar
+					id="masterSmartFilter"
+					entitySet="Document"
+					enableBasicSearch="false"
+					liveMode="false"
+					showMessages="false"
+					useDateRangeType="true"
+					suppressSelection="false"
+					considerSelectionVariants="false"
+					smartVariant="masterSmartVariant"
+					persistencyKey="searchMasterVariant"
+					advancedMode="false"
+					filterBarExpanded="true"
+					considerGroupTitle="false"
+					showClearButton="false"
+					showRestoreButton="true"
+					showGoOnFB="true"
+					showRestoreOnFB="false"
+					showClearOnFB="false"
+					deltaVariantMode="true"
+					showFilterConfiguration="true"
+					>
+				</smartfilterbar:SmartFilterBar>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<smarttable:SmartTable
+				id="masterSmartTable"
+				entitySet="Document"
+				smartFilterId="masterSmartFilter"
+				requestAtLeastFields="DocumentId,DocumentTypeVim,Vendor,VendorName,ApprovalTypeText,DocumentReference,DocumentDate,NetAmount,DocumentCurrency,DueDate,TotalAmountGap"
+				tableType="Table"
+				header="{i18n>Master.Table.Title}"
+				useVariantManagement="true"
+				showVariantManagement="true"
+				useExportToExcel="true"
+				useTablePersonalisation="true"
+				showTablePersonalisation="true"
+				showRowCount="true"				
+				persistencyKey="masterSmartTablePK"
+                enableCustomFilter="true"
+				useOnlyOneSolidToolbar="false"
+				placeToolbarInTable="true"
+				editable="false"
+				enableAutoBinding="true"
+				editTogglable="false"
+				demandPopin="true"
+				showFullScreenButton="false"
+				useInfoToolbar="Auto"
+				smartVariant="masterSmartVariant"
+				beforeRebindTable=".onBeforeRebindTable"
+				>
+                <smarttable:customData>
+                    <!-- <core:CustomData key="useUTCDateTime" value="true" /> -->
+                    <core:CustomData key="dateFormatSettings" value='\{"pattern":"dd-MM-yyyy"\}' />
+                </smarttable:customData> 
+				<Table
+					id="masterTable"
+					mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}"
+					growing="true"
+					growingThreshold="20"
+					growingScrollToLoad="true"
+					sticky="ColumnHeaders,HeaderToolbar"
+					selectionChange=".onSelectionChange"
+					class="sapFDynamicPageAlignContent"
+					width="100%"
+                    itemPress=".onItemPress"
+                    >
+					<columns>
+                        <Column id="actionsColumn"
+                        popinDisplay="WithoutHeader"
+                        popinHAlign="End" 
+                        >
+                        <customData>
+                            <core:CustomData 
+                            key ="p13nData"
+                            value='\{"columnKey" : "ActionButtons", "columnIndex": "102"}'>
+                            </core:CustomData> 
+                        </customData>
+                        <Text text="{i18n>Master.Table.Actions}"/>
+                        </Column>
+                    </columns>
+					<items>
+						<ColumnListItem id="columnListItem" type="Navigation">
+                        <cells>
+                            <FlexBox alignItems="Center"
+                            justifyContent="Right"
+                            >
+                                <Button 
+                                icon="sap-icon://pdf-attachment"
+                                visible="true"
+                                type="Emphasized"
+                                enabled="{= !!${to_DocumentPDF/DocumentId} }"
+                                press=".onPressPDF"
+                                tooltip="{i18n>Master.Table.DisplayPDF}"
+                                class="sapUiTinyMarginEnd"
+                                />
+                            </FlexBox>
+                        </cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</smarttable:SmartTable>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

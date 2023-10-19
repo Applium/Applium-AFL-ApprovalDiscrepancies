@@ -1,0 +1,243 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Communication.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI" />
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/AFL/VIM_APPROVAL_SRV/$metadata">
+        <edmx:Include Namespace="AFL.VIM_APPROVAL_SRV" Alias="SAP" />
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="fr.applium.afl">
+            <Annotations Target="SAP.DocumentType">
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>DocumentId</PropertyPath>
+                        <PropertyPath>DocumentTypeVim</PropertyPath>
+                        <PropertyPath>Vendor</PropertyPath>
+                        <PropertyPath>VendorName</PropertyPath>
+                        <PropertyPath>ApprovalTypeText</PropertyPath>
+                        <PropertyPath>DocumentReference</PropertyPath>
+                        <PropertyPath>DocumentDate</PropertyPath>
+                        <PropertyPath>NetAmount</PropertyPath>
+                        <PropertyPath>DocumentCurrency</PropertyPath>
+                        <PropertyPath>DueDate</PropertyPath>
+                    </Collection>
+                </Annotation>
+
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="DocumentId" />
+                        </Record>
+
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Vendor" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="VendorName" />
+                        </Record>
+
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="DocumentReference" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="DocumentDate" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="NetAmount" />
+                            <PropertyValue Property="Label" String="{i18n>List.Column.NetAmount}" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="DueDate" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="TypologyApproval" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="DisputesNumber" />
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="SAP.DocumentType/DisputesNumber">
+                <Annotation Term="com.sap.vocabularies.Common.v1.IsDigitSequence" Bool="true" />
+            </Annotations>
+
+            <Annotations Target="SAP.DocumentType/TypologyApproval">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <!-- > <PropertyValue Property="CollectionPath" String="" /> </!-->
+                        <PropertyValue Property="SearchSupported" Bool="false" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="TypologyApproval" />
+                                    <PropertyValue Property="ValueListProperty" String="DocumentType" />
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="to_TypologyApproval/TypologyApprovalText" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.Text" Path="to_TypologyApproval/TypologyApprovalText">
+                    <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly" />
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="SAP.DocumentType/CompanyCode">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <!-- ><PropertyValue Property="CollectionPath" String="VHCompanyCode" /> </!-->
+                        <PropertyValue Property="SearchSupported" Bool="true" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="CompanyCode" />
+                                    <PropertyValue Property="ValueListProperty" String="CompanyCode" />
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="CompanyName" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="SAP.DocumentType/DocumentTypeVim">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="CollectionPath" String="DocumentTypeVIM" />
+                        <PropertyValue Property="SearchSupported" Bool="true" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="DocumentTypeVim" />
+                                    <PropertyValue Property="ValueListProperty" String="DocumentType" />
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="to_DocumentTypeVIM/DocumentTypeText" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.Text" Path="to_DocumentTypeVIM/DocumentTypeText">
+                    <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly" />
+                </Annotation>
+            </Annotations>
+
+            <!-- Text for Value Help Document type VIM -->
+            <Annotations Target="SAP.DocumentTypeVIMType/DocumentType">
+                <Annotation Term="Common.Text" Path="DocumentTypeText">
+                    <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly" />
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="SAP.DocumentType/DocumentReference">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <!--<PropertyValue Property="CollectionPath" String="VHInvoiceReference" />  -->
+                        <PropertyValue Property="SearchSupported" Bool="true" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="DocumentReference" />
+                                    <PropertyValue Property="ValueListProperty" String="InvoiceReference" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="SAP.DocumentType/Vendor">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="{i18n>List.VH.Vendor.Title}" />
+                        <PropertyValue Property="CollectionPath" String="VHVendor" />
+                        <PropertyValue Property="SearchSupported" Bool="true" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Vendor" />
+                                    <PropertyValue Property="ValueListProperty" String="Vendor" />
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="VendorName" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="SAP.DocumentType/DocumentCurrency">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="CollectionPath" String="VHDocumentCurrency" />
+                        <PropertyValue Property="SearchSupported" Bool="true" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="DocumentCurrency" />
+                                    <PropertyValue Property="ValueListProperty" String="Currency" />
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="CurrencyName" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="SAP.DocumentType/DocumentId">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="CollectionPath" String="VHDocument" />
+                        <PropertyValue Property="SearchSupported" Bool="true" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="DocumentId" />
+                                    <PropertyValue Property="ValueListProperty" String="DocumentId" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.IsDigitSequence" Bool="true" />
+            </Annotations>
+
+            <Annotations Target="SAP.DocumentType/ApprovalType">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="{/#DocumentType/ApprovalType/@sap:label}" />
+                        <PropertyValue Property="CollectionPath" String="VHApprovalType" />
+                        <PropertyValue Property="SearchSupported" Bool="false" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="ApprovalType" />
+                                    <PropertyValue Property="ValueListProperty" String="ApprovalType" />
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="ApprovalTypeText" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

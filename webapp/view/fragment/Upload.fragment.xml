@@ -1,0 +1,34 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+    xmlns:unified="sap.ui.unified">
+	<ResponsivePopover
+        title="{i18n>Detail.Items.Upload.Title}"
+        placement="Bottom"
+        class="sapUiResponsiveContentPadding" >
+        <content>
+            <FlexBox
+                alignItems="Center"
+                justifyContent="Center"
+                direction="Column">
+                <items>
+                    <MessageStrip
+                        text="{i18n>Detail.Items.Upload.InformationMessage}"
+                        type="Information"
+                        showIcon="true"
+                        showCloseButton="false" />
+                    
+                    <unified:FileUploader
+                        buttonOnly="false"
+                        value="{detailView>/csvPath}"
+                        change=".onChangeFileUploader"
+                        tooltip="{i18n>Detail.Items.Upload.Tooltip}"
+                        fileType="csv"
+                        placeholder="{i18n>Detail.Items.Upload.Placeholder}"
+                        class="sapUiSmallMarginTop"
+                        typeMissmatch=".onTypeMissmatchFileUploader" />
+                </items>
+            </FlexBox>
+        </content>
+    </ResponsivePopover>
+</core:FragmentDefinition>

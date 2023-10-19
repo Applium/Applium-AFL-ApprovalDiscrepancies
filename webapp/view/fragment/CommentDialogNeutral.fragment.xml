@@ -1,0 +1,35 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<Dialog
+		title="{= ${appView>/sActionSource} === 'Transfer' ? ${i18n>App.Comment.Title} : ${i18n>App.Comment.Title.Reply}}"
+		type="Message"
+		 >
+		<content>
+			<MessageStrip
+				text="{i18n>App.Comment.Warning}"
+				type="Warning"
+				showIcon="true"
+				showCloseButton="false" />
+			<TextArea
+				width="50em"
+				rows="5"
+				placeholder=""
+				maxLength="1000"
+				valueLiveUpdate="true"
+				value="{appView>/comment/value}" />
+		</content>
+		<beginButton>
+			<Button
+				text="{i18n>App.Comment.Submit}"
+				enabled="{= !!${appView>/comment/value}}"
+				press=".onPressSubmitComment" />
+		</beginButton>
+		<endButton>
+			<Button
+				text="{i18n>App.Comment.Cancel}"
+				press=".onPressCancelComment" />
+		</endButton>
+
+	</Dialog>
+</core:FragmentDefinition>
