@@ -9,7 +9,7 @@
 | **Floorplan Used**<br>2listdetail                                                              |
 | **Service Type**<br>SAP System (ABAP On Premise)                                               |
 
-|**Service URL**<br>http://vm101:443/sap/opu/odata/afl/VIM_APPROVAL_SRV
+|**Service URL**<br>http://vm101:443/sap/opu/odata/afl/VIM_APPROVAL_DISC_SRV
 |**Module Name**<br>afl_approval|
 |**Application Title**<br>Invoices to validate|
 |**Namespace**<br>fr.applium.afl|

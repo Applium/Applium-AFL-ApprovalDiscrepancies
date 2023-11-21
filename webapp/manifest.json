@@ -12,7 +12,7 @@
         "resources": "resources.json",
         "dataSources": {
             "mainService": {
-                "uri": "/sap/opu/odata/afl/VIM_APPROVAL_SRV/",
+                "uri": "/sap/opu/odata/afl/VIM_APPROVAL_DISC_SRV/",
                 "type": "OData",
                 "settings": {
                     "odataVersion": "2.0",

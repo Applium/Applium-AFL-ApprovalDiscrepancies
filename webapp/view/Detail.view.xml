@@ -6,7 +6,8 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
-	xmlns:commons="sap.suite.ui.commons">
+	xmlns:commons="sap.suite.ui.commons"
+	xmlns:upload="sap.m.upload">
 
 	<uxap:ObjectPageLayout 
 		busy="{detailView>/busy}"
@@ -120,7 +121,6 @@
 						formatOptions: {showMeasure: false}
 					}"
 					unit="{DocumentCurrency}"/>
-
 			</l:VerticalLayout>
 			<l:VerticalLayout>
 						<Label 
@@ -211,12 +211,187 @@
 									}"
 									unit="{DocumentCurrency}" />
 								<Label 
+									text="{/#DocumentType/TotalAmountGap/@sap:label}" />
+								<ObjectNumber 
+									number="{
+										parts: ['TotalAmountGap', 'DocumentCurrency'],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{DocumentCurrency}" />
+								<Label 
 									text="{/#DocumentType/PrincipalAgent/@sap:label}"
 									visible="{= !!${PrincipalAgent}}" />
 								<Text 
 									text="{PrincipalAgentName} ({PrincipalAgent})"
 									visible="{= !!${PrincipalAgent}}" />
+								
 							</f:SimpleForm>
+						</uxap:blocks>
+
+					</uxap:ObjectPageSubSection>
+				</uxap:subSections>
+
+			</uxap:ObjectPageSection>
+
+						<uxap:ObjectPageSection
+				showTitle="true"
+				titleUppercase="false"
+				title="{i18n>Detail.Section.GapsSummary}"
+				visible="true" >
+
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection
+						titleUppercase="false"
+						title="{i18n>Detail.Section.GapsSummary}" >
+
+						<uxap:blocks>
+							
+							<f:SimpleForm editable="false" layout="ResponsiveGridLayout" adjustLabelSpan="true">
+								<f:content>
+									<Label
+										text="{i18n>Detail.Section.GapsSummary.Label.OrderedQuantity}">
+										<layoutData>
+       										<l:GridData span="L2 M4 S7" />
+    									</layoutData>
+									</Label>
+									<ObjectNumber
+										emphasized="true"
+										class="sapUiTinyMarginBottom"
+										number="{TotalQuantityOrdered}"
+										unit="{QuantityUnit}"
+										visible="{= !!${TotalQuantityOrdered}}">
+										<layoutData>
+       										<l:GridData span="L4 M2 S5" />
+    									</layoutData>
+									</ObjectNumber>
+
+									<Label
+										text="{i18n>Detail.Section.GapsSummary.Label.OrderedAmount}"
+										visible="{= !!${TotalAmountOrdered}}" >
+										<layoutData>
+       										<l:GridData span="L2 M4 S7" />
+    									</layoutData>
+									</Label>
+									<ObjectNumber
+										emphasized="true"
+										class="sapUiTinyMarginBottom"
+										number="{
+											parts: ['TotalAmountOrdered', 'DocumentCurrency'],
+											type: 'sap.ui.model.type.Currency',
+											formatOptions: {showMeasure: false}
+										}"
+										unit="{DocumentCurrency}"
+										visible="{= !!${TotalAmountOrdered}}" >
+										<layoutData>
+       										<l:GridData span="L4 M2 S5" />
+    									</layoutData>
+									</ObjectNumber>
+									
+									<Label 
+										text="{i18n>Detail.Section.GapsSummary.Label.ReceiptQuantity}"
+										visible="true" >
+										<layoutData>
+       										<l:GridData span="L2 M4 S7" />
+    									</layoutData>
+									</Label>
+									<ObjectNumber
+										emphasized="true"
+										class="sapUiTinyMarginBottom"
+										number="{TotalQuantityReceived}"
+										unit="{QuantityUnit}"
+										visible="{= !!${TotalQuantityReceived}}" >
+										<layoutData>
+       										<l:GridData span="L4 M2 S5" />
+    									</layoutData>
+									</ObjectNumber>
+										
+									<Label
+										text="{i18n>Detail.Section.GapsSummary.Label.ReceiptAmount}"
+										visible="{= !!${TotalAmountReceived}}" >
+										<layoutData>
+       										<l:GridData span="L2 M4 S7" />
+    									</layoutData>
+									</Label>
+									<ObjectNumber
+										emphasized="true"
+										class="sapUiTinyMarginBottom"
+										number="{
+											parts: ['TotalAmountReceived', 'DocumentCurrency'],
+											type: 'sap.ui.model.type.Currency',
+											formatOptions: {showMeasure: false}
+										}"
+										unit="{DocumentCurrency}"
+										visible="{= !!${TotalAmountReceived}}" >
+										<layoutData>
+       										<l:GridData span="L4 M2 S5" />
+    									</layoutData>
+									</ObjectNumber>
+									
+								<Label 
+									text="{i18n>Detail.Section.GapsSummary.Label.ConsumedQuantity}"
+									visible="{= !!${TotalQuantityInvoiced}}" >
+									<layoutData>
+       									<l:GridData span="L2 M4 S7" />
+    								</layoutData>
+								</Label>
+								<ObjectNumber
+									emphasized="true"
+									class="sapUiTinyMarginBottom"
+									number="{TotalQuantityInvoiced}"
+									unit="{QuantityUnit}"
+									visible="{= !!${TotalQuantityInvoiced}}" >
+									<layoutData>
+       									<l:GridData span="L4 M2 S5" />
+    								</layoutData>
+								</ObjectNumber>
+								
+								<Label
+									text="{i18n>Detail.Section.GapsSummary.Label.ConsumedAmount}"
+									visible="{= !!${TotalAmountInvoiced}}" >
+									<layoutData>
+       									<l:GridData span="L2 M4 S7" />
+    								</layoutData>
+								</Label>
+								<ObjectNumber
+									emphasized="true"
+									class="sapUiTinyMarginBottom"
+									number="{
+										parts: ['TotalAmountInvoiced', 'DocumentCurrency'],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{DocumentCurrency}"
+									visible="{= !!${TotalAmountInvoiced}}" >
+									<layoutData>
+       									<l:GridData span="L4 M2 S5" />
+    								</layoutData>
+								</ObjectNumber>
+								
+								<Label
+									text="{i18n>Detail.Section.GapsSummary.Label.AdditionalCostsAmount}"
+									visible="{= !!${AdditionalCostsAmount}}">
+									<layoutData>
+       									<l:GridData span="L8 M10 S7" />
+    								</layoutData>
+								</Label>
+								<ObjectNumber
+									emphasized="true"
+									number="{
+										parts: ['AdditionalCostsAmount', 'DocumentCurrency'],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{DocumentCurrency}"
+									visible="{= !!${AdditionalCostsAmount}}" >
+									<layoutData>
+       									<l:GridData span="L4 M2 S5" />
+    								</layoutData>
+								</ObjectNumber>
+				
+								</f:content>
+							</f:SimpleForm>
+							
 						</uxap:blocks>
 
 					</uxap:ObjectPageSubSection>
@@ -227,132 +402,129 @@
 			<uxap:ObjectPageSection
 				showTitle="true"
 				titleUppercase="false"
-				title="{i18n>Detail.Section.Items}" >
+				title="{i18n>Detail.Section.ItemsWithGaps}"
+				visible="true" >
 
 				<uxap:subSections>
 					<uxap:ObjectPageSubSection
 						titleUppercase="false"
-						title="{i18n>Detail.Section.Items}" >
+						title="{i18n>Detail.Section.ItemsWithGaps}" >
 
 						<uxap:blocks>
-							<Table
-								items="{detailView>/documentItems}"
-								mode="displayOnly"
-								 >
-								<!-- <headerToolbar>
-									<OverflowToolbar>
-										<content>
-											<ObjectStatus 
-												title="{i18n>Detail.Items.AddItem.Sold}"
-												text="{detailView>/soldAmount} {DocumentCurrency}"
-												state="{
-													path: 'detailView>/soldAmount',
-													formatter: '.formatter.soldState'
-												}"/>
-										</content>
-									</OverflowToolbar>
-								</headerToolbar> -->
-								<columns>
-									<Column>
-										<Text
-											text="{/#DocumentItemType/PurchasingDocument/@sap:label}" />
-									</Column>
-									<Column>
-										<Text
-											text="{/#DocumentItemType/PurchasingDocumentItem/@sap:label}" />
-									</Column>
-									<Column>
-										<Text
-											text="{/#DocumentItemType/DocumentItemId/@sap:label}" />
-									</Column>
-									<Column>
-										<Text
-											text="{/#DocumentItemType/Bednr/@sap:label}" />
-									</Column>
-									<Column
-										demandPopin="true"
-										minScreenWidth="Tablet">
-										<Text
-											text="{/#DocumentItemType/AmountInDocCurrency/@sap:label}" />
-									</Column>
-									<Column>
-										<Text
-											text="{/#DocumentItemType/DescriptionItem/@sap:label}" />
-									</Column>
-									<Column
-										demandPopin="true"
-										minScreenWidth="Tablet">
-										<Text
-											text="{/#DocumentItemType/AmountPostedItem/@sap:label}" />
-									</Column>	
-									<Column
-										demandPopin="true"
-										minScreenWidth="Tablet">
-										<Text
-											text="{/#DocumentItemType/RemainingToInvoiceItem/@sap:label}" />
-									</Column>
+							<Table id="lineItemsList"
+								items="{
+									path: 'to_DocumentItem'
 									
+        						}">
+								<columns>
+									<Column
+										demandPopin="true"
+										minScreenWidth="Desktop">
+										<Text
+											text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.Description}" />
+									</Column>
+									<Column>
+										<Text
+											text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.PurchasingDocument}" />
+									</Column>
+									<Column
+										demandPopin="true"
+										minScreenWidth="Tablet">
+										<Text
+											text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.InvoicedNetAmount}" />
+									</Column>
+									<Column
+										demandPopin="true"
+										minScreenWidth="Tablet">
+										<Text
+											text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.PriceGap}" />
+									</Column>
+									<Column
+										demandPopin="true"
+										minScreenWidth="Tablet">
+										<Text
+											text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.QuantityGap}" />
+									</Column>
+									<Column
+										demandPopin="true"
+										minScreenWidth="Tablet">
+										<Text
+											text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.TotalItemGap}" />
+									</Column>
 								</columns>
 								<items>
 									<ColumnListItem>
 										<cells>
-											<ObjectIdentifier
-												title="{detailView>PurchasingDocument}"
-												/>
-											<Label	text="{detailView>PurchasingDocumentItem}" />
-											<Label
-												text="{detailView>DocumentItemId}"
-											 />
-											<Label
-												text="{detailView>Bednr}"
-											 />
-											<Label
-												text="{detailView>AmountInDocCurrency} {DocumentCurrency}"
-												type="Number"
-												description="{DocumentCurrency}"
-												maxLength="20"
-											/>
-											<Label
-												text="{detailView>DescriptionItem}"
-											/>
-											<Label
-												text="{detailView>AmountPostedItem} {DocumentCurrency}"
-											/>
-											<Label
-												text="{detailView>RemainingToInvoiceItem} {DocumentCurrency}"
-											 />
+											
+											<Text
+												text="{DescriptionItem}" />
+											
+											<Link
+												text="{PurchasingDocument}/{PurchasingDocumentItem}"
+												press=".onPressLinkPurchasingDocument" />
+											
+											<ObjectNumber
+												emphasized="true"
+												number="{
+													parts: ['NetAmount', 'DocumentCurrency'],
+													type: 'sap.ui.model.type.Currency',
+													formatOptions: {showMeasure: false}
+												}"
+												unit="{DocumentCurrency}" />
+										
+											<ObjectNumber
+												emphasized="true"
+												number="{
+													parts: ['PriceGap', 'DocumentCurrency'],
+													type: 'sap.ui.model.type.Currency',
+													formatOptions: {showMeasure: false}
+												}"
+												unit="{DocumentCurrency}" />
+											
+											<ObjectNumber
+												emphasized="true"
+												number="{QuantityGap}"
+												unit="{QuantityUoM}" />
+										
+											<ObjectNumber
+												emphasized="true"
+												number="{
+													parts: ['TotalItemGap', 'DocumentCurrency'],
+													type: 'sap.ui.model.type.Currency',
+													formatOptions: {showMeasure: false}
+												}"
+												unit="{DocumentCurrency}" />
+
 										</cells>
 									</ColumnListItem>
 								</items>
 							</Table>
+							
 						</uxap:blocks>
 
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>
 
 			</uxap:ObjectPageSection>
-			<!-- History Section -->
-			<uxap:ObjectPageSection 
-				showTitle="true"
-				titleUppercase="false"
-				title="{i18n>Detail.Section.History}">
 
-				<uxap:subSections>
-					<uxap:ObjectPageSubSection
-						titleUppercase="false" 
-						title="{i18n>Detail.Section.History}">
+			            <!-- Comments approbation Section -->
+            <uxap:ObjectPageSection id="commentsSection"
+                showTitle="true"
+                titleUppercase="false"
+                title="{i18n>Detail.Section.Comments}">
 
-						<uxap:blocks>
-							<VBox
-								width="100%" >
-								<FeedInput
-									post=".onPostComment"
-									icon="sap-icon://employee"
-									value="{detailView>/newComment}"
-									rows="3"
-									maxLength="1000" />
-								<List
-									items="{
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection id="commentsSubSection"
+                        titleUppercase="false"
+                        title="{i18n>Detail.Section.Comments}">
+                        <uxap:blocks>
+                            <VBox id="vboxFeed"
+                                width="100%">
+                                <!--
+                                <FeedInput id="feedInput" post=".onPostComment" icon="sap-icon://employee" value="{detailView>/newComment}" rows="3" maxLength="1000" />
+                                -->
+                                <List id="feedList"
+                                    items="{
 										path: 'to_DocumentComment',
 										sorter: [
 											{
@@ -361,29 +533,178 @@
 											}
 										]
 									}">
-									<FeedListItem
-										sender="{LogAgentName}"
-										senderActive="false"
-										icon="sap-icon://employee"
-										iconActive="false"
-										timestamp="{
+                                    <FeedListItem id="feedListItem"
+                                        sender="{LogAgentName}"
+                                        senderActive="false"
+                                        icon="sap-icon://employee"
+                                        iconActive="false"
+                                        timestamp="{
 											path: 'LogDatetime', 
 											type: 'sap.ui.model.type.DateTime',
 											formatOptions: {
-												style: 'medium',
-												UTC: true
+												            style: 'medium',                                               
+                                                            pattern: 'dd MMMM yyyy HH:mm:ss',
+                                                            UTC: false
 											}
 										}"
-										text="{
+                                        text="{
 											path:'LogComment',
 											formatter: '.formatter.addNewLineBefore'
 										}" />
-								</List>
-							</VBox>
+                                </List>
+                            </VBox>
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+
+			
+			            <!-- History Section -->
+            <uxap:ObjectPageSection id="historytSection"
+                title="{i18n>Detail.Section.History}"
+                titleUppercase="false">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection id="historytSubSection"
+                        title=" ">
+                        <commons:Timeline id="timelineId"
+                            enableDoubleSided="false"
+                            showHeaderBar="false"
+                            enableScroll="false"
+                            growingThreshold="0"
+                            content="{to_DocumentHistory}">
+                            <commons:content>
+                                <!--dateTime="{parts: ['StartDate', 'StartTime'], formatter: '.formatter.timeLineDateTime'}"-->
+                                <commons:TimelineItem id="idTemplateItem"
+                                    dateTime="{path:'LogDatetime',
+                                                                                    type:'sap.ui.model.type.DateTime',
+                                                                                    formatOptions: { style: 'medium',                                               
+                                                                                    pattern: 'dd MMMM yyyy HH:mm:ss',
+                                                                                    UTC: false                                                
+                                                                                    }}"
+                                    title="{ActualRole}"
+                                    userName="{FullNameAgent}"
+                                    status="{= ${Cancelled} === true ? 'Error' : 'Success' }"
+                                    icon="{= ${Cancelled} === true ? 'sap-icon://decline' : 'sap-icon://accept' }">
+                                    <commons:embeddedControl>
+                                        <VBox id="VBox1">
+                                            <HBox id="HBox1"
+                                                justifyContent="SpaceBetween"
+                                                class="sapUiSmallMarginBottom">
+                                                <Text id="ActivityID"
+                                                    text="{Activity}" />
+                                                <Text id="StatusTextID"
+                                                    text="{StatusText}" />
+                                            </HBox>
+                                            <Text id="ProcessTypeTextID"
+                                                text="{ProcessTypeText}" />
+                                        </VBox>
+                                    </commons:embeddedControl>
+                                </commons:TimelineItem>
+                            </commons:content>
+                        </commons:Timeline>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+
+			<uxap:ObjectPageSection
+				showTitle="true"
+				titleUppercase="false"
+				title="{i18n>Detail.Section.Attachment}" >
+
+				<uxap:subSections>
+					<uxap:ObjectPageSubSection
+						titleUppercase="false"
+						title="{i18n>Detail.Section.Attachment}" >
+						
+						<uxap:blocks>
+								
+							<upload:UploadSet
+								id="attachmentUploadSet"
+								busy="{detailView>/busyAttachmentsList}"
+								busyIndicatorDelay="0"
+								instantUpload="true"
+								maxFileNameLength="55"
+								maxFileSize="10"
+								uploadUrl="/sap/opu/odata/afl/VIM_APPROVAL_DISC_SRV/DocumentAttachment"
+								visible="true"
+								items="{
+									path: 'to_DocumentAttachment',
+									sorter: {
+										path: 'ObjectNumber',
+										descending: true
+									},
+									templateShareable: false
+								}"
+								beforeItemAdded=".onAttachmentBeforeItemAdded"
+								beforeUploadStarts=".onAttachmentBeforeUploadStarts"
+								uploadCompleted=".onUploadCompleteAttachment">
+									<upload:items>
+										<upload:UploadSetItem
+											fileName="{ObjectDescription}.{FileFormat}"
+											mediaType="{path: 'FileFormat', formatter:'.formatter.mimeType'}"
+											openPressed=".onPressAttachmentItem"
+											enabledEdit="false"
+											visibleEdit="false"
+											visibleRemove="true"
+											enabledRemove="{= ${ObjectSort} !== 'ZVIM_DAV' &amp;&amp; ${ObjectSort} !== 'ZVIM_DAV_A'}"
+											removePressed=".onPressDeletedAttachment"
+											url="{
+												parts: [{
+													path: 'DocumentId'
+												},
+												{
+													path: 'ObjectNumber'
+												},
+												{
+													path: 'ObjectCode'
+												},
+												{
+													path: 'ObjectYear'
+												}
+												],
+												formatter: '.formatter.documentAttachmentURL'
+											}">
+							<upload:attributes>
+								<ObjectAttribute
+									title="{/#ZI_VIMDocumentAttachmentType/FileSize/@sap:label}"
+									text="{
+										path: 'FileSize',
+										formatter: '.formatter.documentSize'
+									}"
+									active="false"
+									visible="{= !!${FileSize}}"/>
+								<ObjectAttribute
+									title="{/#ZI_VIMDocumentAttachmentType/CreationDate/@sap:label}"
+									text="{
+										path: 'CreationDate',
+										type: 'sap.ui.model.type.Date',
+										formatOptions: { 
+											format: 'yMMMd',
+											style: 'short'
+										}
+									}"
+									active="false"
+									visible="{= !!${CreationDate}}"/>
+								<ObjectAttribute
+									title="{/#ZI_VIMDocumentAttachmentType/CreatedByUserName/@sap:label}"
+									text="{
+										path: 'CreatedByUserName'
+									}"
+									active="false"
+									visible="{= !!${CreatedByUserName}}"/>
+							</upload:attributes>
+						</upload:UploadSetItem>
+					</upload:items>
+				</upload:UploadSet>
+
 						</uxap:blocks>
+
 					</uxap:ObjectPageSubSection>
 				</uxap:subSections>
+
 			</uxap:ObjectPageSection>
+
+			
 		</uxap:sections>
 
 		<uxap:footer>

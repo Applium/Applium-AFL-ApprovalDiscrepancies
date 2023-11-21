@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
     <edmx:DataServices m:DataServiceVersion="2.0">
-        <Schema Namespace="AFL.VIM_APPROVAL_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <Schema Namespace="AFL.VIM_APPROVAL_DISC_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
             <EntityType Name="DocumentType" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="DocumentId" />
@@ -54,9 +54,9 @@
                 <Property Name="TotalAmountInvoiced" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:unicode="false" sap:unit="AmountUnit" sap:label="Tot amount invoiced" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
                 <Property Name="TotalAmountGap" Type="Edm.Decimal" Nullable="false" Precision="14" Scale="3" sap:unicode="false" sap:unit="AmountUnit" sap:label="Total Amount of Gap" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
                 <Property Name="AmountUnit" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Amount Gap Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code" />
-                <NavigationProperty Name="to_DocumentItem" Relationship="AFL.VIM_APPROVAL_SRV.assoc_DocumentToDocumentItem" FromRole="FromRole_assoc_DocumentToDocumentItem" ToRole="ToRole_assoc_DocumentToDocumentItem" />
-                <NavigationProperty Name="to_DocumentTypeVIM" Relationship="AFL.VIM_APPROVAL_SRV.assoc_DocumentToDocumentTypeVIM" FromRole="FromRole_assoc_DocumentToDocumentTypeVIM" ToRole="ToRole_assoc_DocumentToDocumentTypeVIM" />
-                <NavigationProperty Name="to_TypologyApproval" Relationship="AFL.VIM_APPROVAL_SRV.assoc_DocumentToTypologyApproval" FromRole="FromRole_assoc_DocumentToTypologyApproval" ToRole="ToRole_assoc_DocumentToTypologyApproval" />
+                <NavigationProperty Name="to_DocumentItem" Relationship="AFL.VIM_APPROVAL_DISC_SRV.assoc_DocumentToDocumentItem" FromRole="FromRole_assoc_DocumentToDocumentItem" ToRole="ToRole_assoc_DocumentToDocumentItem" />
+                <NavigationProperty Name="to_DocumentTypeVIM" Relationship="AFL.VIM_APPROVAL_DISC_SRV.assoc_DocumentToDocumentTypeVIM" FromRole="FromRole_assoc_DocumentToDocumentTypeVIM" ToRole="ToRole_assoc_DocumentToDocumentTypeVIM" />
+                <NavigationProperty Name="to_TypologyApproval" Relationship="AFL.VIM_APPROVAL_DISC_SRV.assoc_DocumentToTypologyApproval" FromRole="FromRole_assoc_DocumentToTypologyApproval" ToRole="ToRole_assoc_DocumentToTypologyApproval" />
             </EntityType>
             <EntityType Name="DocumentItemType" sap:content-version="1">
                 <Key>
@@ -97,16 +97,16 @@
                 <Property Name="TypologyApprovalText" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Typolo. Appro. Text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
             </EntityType>
             <Association Name="assoc_DocumentToDocumentTypeVIM" sap:content-version="1">
-                <End Type="AFL.VIM_APPROVAL_SRV.DocumentType" Multiplicity="1" Role="FromRole_assoc_DocumentToDocumentTypeVIM" />
-                <End Type="AFL.VIM_APPROVAL_SRV.DocumentTypeVIMType" Multiplicity="0..1" Role="ToRole_assoc_DocumentToDocumentTypeVIM" />
+                <End Type="AFL.VIM_APPROVAL_DISC_SRV.DocumentType" Multiplicity="1" Role="FromRole_assoc_DocumentToDocumentTypeVIM" />
+                <End Type="AFL.VIM_APPROVAL_DISC_SRV.DocumentTypeVIMType" Multiplicity="0..1" Role="ToRole_assoc_DocumentToDocumentTypeVIM" />
             </Association>
             <Association Name="assoc_DocumentToTypologyApproval" sap:content-version="1">
-                <End Type="AFL.VIM_APPROVAL_SRV.DocumentType" Multiplicity="1" Role="FromRole_assoc_DocumentToTypologyApproval" />
-                <End Type="AFL.VIM_APPROVAL_SRV.TypologyApprovalType" Multiplicity="0..1" Role="ToRole_assoc_DocumentToTypologyApproval" />
+                <End Type="AFL.VIM_APPROVAL_DISC_SRV.DocumentType" Multiplicity="1" Role="FromRole_assoc_DocumentToTypologyApproval" />
+                <End Type="AFL.VIM_APPROVAL_DISC_SRV.TypologyApprovalType" Multiplicity="0..1" Role="ToRole_assoc_DocumentToTypologyApproval" />
             </Association>
             <Association Name="assoc_DocumentToDocumentItem" sap:content-version="1">
-                <End Type="AFL.VIM_APPROVAL_SRV.DocumentType" Multiplicity="*" Role="FromRole_assoc_DocumentToDocumentItem" />
-                <End Type="AFL.VIM_APPROVAL_SRV.DocumentItemType" Multiplicity="*" Role="ToRole_assoc_DocumentToDocumentItem" />
+                <End Type="AFL.VIM_APPROVAL_DISC_SRV.DocumentType" Multiplicity="*" Role="FromRole_assoc_DocumentToDocumentItem" />
+                <End Type="AFL.VIM_APPROVAL_DISC_SRV.DocumentItemType" Multiplicity="*" Role="ToRole_assoc_DocumentToDocumentItem" />
                 <ReferentialConstraint>
                     <Principal Role="FromRole_assoc_DocumentToDocumentItem">
                         <PropertyRef Name="DocumentId" />
@@ -116,26 +116,26 @@
                     </Dependent>
                 </ReferentialConstraint>
             </Association>
-            <EntityContainer Name="AFL_VIM_APPROVAL_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
-                <EntitySet Name="Document" EntityType="AFL.VIM_APPROVAL_SRV.DocumentType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
-                <EntitySet Name="DocumentItem" EntityType="AFL.VIM_APPROVAL_SRV.DocumentItemType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
-                <EntitySet Name="DocumentTypeVIM" EntityType="AFL.VIM_APPROVAL_SRV.DocumentTypeVIMType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
-                <EntitySet Name="TypologyApproval" EntityType="AFL.VIM_APPROVAL_SRV.TypologyApprovalType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
-                <AssociationSet Name="assoc_DocumentToDocumentItemSet" Association="AFL.VIM_APPROVAL_SRV.assoc_DocumentToDocumentItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+            <EntityContainer Name="AFL_VIM_APPROVAL_DISC_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="Document" EntityType="AFL.VIM_APPROVAL_DISC_SRV.DocumentType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+                <EntitySet Name="DocumentItem" EntityType="AFL.VIM_APPROVAL_DISC_SRV.DocumentItemType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+                <EntitySet Name="DocumentTypeVIM" EntityType="AFL.VIM_APPROVAL_DISC_SRV.DocumentTypeVIMType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+                <EntitySet Name="TypologyApproval" EntityType="AFL.VIM_APPROVAL_DISC_SRV.TypologyApprovalType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1" />
+                <AssociationSet Name="assoc_DocumentToDocumentItemSet" Association="AFL.VIM_APPROVAL_DISC_SRV.assoc_DocumentToDocumentItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="Document" Role="FromRole_assoc_DocumentToDocumentItem" />
                     <End EntitySet="DocumentItem" Role="ToRole_assoc_DocumentToDocumentItem" />
                 </AssociationSet>
-                <AssociationSet Name="assoc_DocumentToDocumentTypeVIMSet" Association="AFL.VIM_APPROVAL_SRV.assoc_DocumentToDocumentTypeVIM" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                <AssociationSet Name="assoc_DocumentToDocumentTypeVIMSet" Association="AFL.VIM_APPROVAL_DISC_SRV.assoc_DocumentToDocumentTypeVIM" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="Document" Role="FromRole_assoc_DocumentToDocumentTypeVIM" />
                     <End EntitySet="DocumentTypeVIM" Role="ToRole_assoc_DocumentToDocumentTypeVIM" />
                 </AssociationSet>
-                <AssociationSet Name="assoc_DocumentToTypologyApprovalSet" Association="AFL.VIM_APPROVAL_SRV.assoc_DocumentToTypologyApproval" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                <AssociationSet Name="assoc_DocumentToTypologyApprovalSet" Association="AFL.VIM_APPROVAL_DISC_SRV.assoc_DocumentToTypologyApproval" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
                     <End EntitySet="Document" Role="FromRole_assoc_DocumentToTypologyApproval" />
                     <End EntitySet="TypologyApproval" Role="ToRole_assoc_DocumentToTypologyApproval" />
                 </AssociationSet>
             </EntityContainer>
-            <atom:link rel="self" href="https://vm101:443/sap/opu/odata/afl/VIM_APPROVAL_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom" />
-            <atom:link rel="latest-version" href="https://vm101:443/sap/opu/odata/afl/VIM_APPROVAL_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom" />
+            <atom:link rel="self" href="https://vm101:443/sap/opu/odata/afl/VIM_APPROVAL_DISC_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom" />
+            <atom:link rel="latest-version" href="https://vm101:443/sap/opu/odata/afl/VIM_APPROVAL_DISC_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom" />
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

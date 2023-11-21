@@ -8,8 +8,8 @@
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
         <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI" />
     </edmx:Reference>
-    <edmx:Reference Uri="/sap/opu/odata/AFL/VIM_APPROVAL_SRV/$metadata">
-        <edmx:Include Namespace="AFL.VIM_APPROVAL_SRV" Alias="SAP" />
+    <edmx:Reference Uri="/sap/opu/odata/AFL/VIM_APPROVAL_DISC_SRV/$metadata">
+        <edmx:Include Namespace="AFL.VIM_APPROVAL_DISC_SRV" Alias="SAP" />
     </edmx:Reference>
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="fr.applium.afl">

@@ -21,21 +21,22 @@ sap.ui.define(["sap/ui/base/Object", "sap/base/Log"], function (BaseObject, Log)
         function (fnResolve, fnReject) {
           this._oWhenListHasBeenSet.then(
             function (oList) {
-              oList.getBinding("items").attachEventOnce(
-                "dataReceived",
-                function () {
-                  if (this._oList.getItems().length) {
-                    fnResolve({
-                      list: oList,
-                    });
-                  } else {
-                    // No items in the list
-                    fnReject({
-                      list: oList,
-                    });
-                  }
-                }.bind(this)
-              );
+              /*
+                          oList.getBinding("items").attachEventOnce("dataReceived",
+                              function () {
+                                  if (this._oList.getItems().length) {
+                                      fnResolve({
+                                          list : oList
+                                      });
+                                  } else {
+                                      // No items in the list
+                                      fnReject({
+                                          list : oList
+                                      });
+                                  }
+                              }.bind(this)
+                          );
+                          */
             }.bind(this)
           );
         }.bind(this)

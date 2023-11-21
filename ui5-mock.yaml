@@ -30,7 +30,7 @@ server:
       beforeMiddleware: csp
       configuration:
         service:
-          urlPath: /sap/opu/odata/afl/VIM_APPROVAL_SRV
+          urlPath: /sap/opu/odata/afl/VIM_APPROVAL_DISC_SRV
           metadataXmlPath: ./webapp/localService/metadata.xml
           mockdataRootPath: ./webapp/localService/data
           generateMockData: true
