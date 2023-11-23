@@ -50,7 +50,6 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="NetAmount" />
-                            <PropertyValue Property="Label" String="{i18n>List.Column.NetAmount}" />
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="DueDate" />

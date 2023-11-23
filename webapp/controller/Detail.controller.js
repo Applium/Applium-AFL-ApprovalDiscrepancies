@@ -94,6 +94,12 @@ sap.ui.define(
         });
       },
 
+      onBeforeRebindTable: function (oEvent) {
+        var oBindingParams = oEvent.getParameter("bindingParams");
+        oBindingParams.parameters.numberOfExpandedLevels = 1;
+        // oBindingParams.parameters.select += ",DocumentId,DocumentItemId,ItemBlocked";
+      },
+
       // _onDownloadPDF: function () {
       //   var oView = this.getView(),
       //     oElementBinding = oView.getElementBinding(),
@@ -728,7 +734,7 @@ sap.ui.define(
         this.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", false);
         // No item should be selected on list after detail page is closed
         this.getOwnerComponent().oListSelector.clearMasterListSelection();
-        this.getRouter().navTo("list");
+        this.getRouter().navTo("master");
       },
 
       /**
@@ -746,6 +752,46 @@ sap.ui.define(
           this.getModel("appView").setProperty("/layout", this.getModel("appView").getProperty("/previousLayout"));
         }
       },
+      processFlowApprovalDate: function (sApprovalDate, oTime) {
+        var ret = null,
+          oI18n = this.getResourceBundle(),
+          oDateFormat = DateFormat.getDateTimeInstance({
+            pattern: "dd/MM/yy HH:mm",
+            UTC: true,
+          }),
+          oSplitTime,
+          oTimeLineDateTime,
+          sDateFormated;
+
+        if (sApprovalDate !== null) {
+          ret = "";
+          oSplitTime = this.formatter.msToTime(oTime.ms);
+          oTimeLineDateTime = this.formatter.timeLineDateTime(sApprovalDate, oSplitTime);
+          sDateFormated = oDateFormat.format(new Date(oTimeLineDateTime));
+
+          ret = oI18n.getText("Detail.Section.ApprovalStep.validatedOn") + " " + sDateFormated;
+        }
+
+        return ret;
+      },
+      onZoomIn: function () {
+        var oProcessFlow = this.byId("processflow");
+
+        oProcessFlow.zoomIn();
+      },
+
+      onZoomOut: function () {
+        var oProcessFlow = this.byId("processflow");
+
+        oProcessFlow.zoomOut();
+      },
+      onResreshProcessWf: function () {
+        var oProcessFlow = this.byId("processflow");
+        //oProcessFlow.updateModel();
+        oProcessFlow.getBinding("lanes").refresh();
+        oProcessFlow.getBinding("nodes").refresh();
+      },
+
       /*** Init models ***/
 
       _initDetailModel: function () {
@@ -849,45 +895,6 @@ sap.ui.define(
           }.bind(this)
         );
         oBinding.refresh();
-      },
-      processFlowApprovalDate: function (sApprovalDate, oTime) {
-        var ret = null,
-          oI18n = this.getResourceBundle(),
-          oDateFormat = DateFormat.getDateTimeInstance({
-            pattern: "dd/MM/yy HH:mm",
-            UTC: true,
-          }),
-          oSplitTime,
-          oTimeLineDateTime,
-          sDateFormated;
-
-        if (sApprovalDate !== null) {
-          ret = "";
-          oSplitTime = this.formatter.msToTime(oTime.ms);
-          oTimeLineDateTime = this.formatter.timeLineDateTime(sApprovalDate, oSplitTime);
-          sDateFormated = oDateFormat.format(new Date(oTimeLineDateTime));
-
-          ret = oI18n.getText("Detail.Section.ApprovalStep.validatedOn") + " " + sDateFormated;
-        }
-
-        return ret;
-      },
-      onZoomIn: function () {
-        var oProcessFlow = this.byId("processflow");
-
-        oProcessFlow.zoomIn();
-      },
-
-      onZoomOut: function () {
-        var oProcessFlow = this.byId("processflow");
-
-        oProcessFlow.zoomOut();
-      },
-      onResreshProcessWf: function () {
-        var oProcessFlow = this.byId("processflow");
-        //oProcessFlow.updateModel();
-        oProcessFlow.getBinding("lanes").refresh();
-        oProcessFlow.getBinding("nodes").refresh();
       },
     });
   }
