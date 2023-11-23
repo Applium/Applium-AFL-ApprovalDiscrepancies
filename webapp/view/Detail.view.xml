@@ -7,7 +7,9 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
 	xmlns:commons="sap.suite.ui.commons"
-	xmlns:upload="sap.m.upload">
+	xmlns:upload="sap.m.upload"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:applium="fr.applium.afl.aflapproval.control">
 
 	<uxap:ObjectPageLayout 
 		busy="{detailView>/busy}"
@@ -177,7 +179,7 @@
 										formatOptions: {showMeasure: false}
 									}"
 									unit="{DocumentCurrency}" />
-									<Label 
+								<Label 
 									text="{/#DocumentType/CrAmnt/@sap:label}" />
 								<ObjectNumber 
 									number="{
@@ -186,7 +188,7 @@
 										formatOptions: {showMeasure: false}
 									}"
 									unit="{DocumentCurrency}" />
-									<Label 
+								<Label 
 									text="{/#DocumentType/CrAmntRec/@sap:label}" />
 								<ObjectNumber 
 									number="{
@@ -234,7 +236,7 @@
 
 			</uxap:ObjectPageSection>
 
-						<uxap:ObjectPageSection
+			<uxap:ObjectPageSection
 				showTitle="true"
 				titleUppercase="false"
 				title="{i18n>Detail.Section.GapsSummary}"
@@ -398,7 +400,7 @@
 				</uxap:subSections>
 
 			</uxap:ObjectPageSection>
-			
+
 			<uxap:ObjectPageSection
 				showTitle="true"
 				titleUppercase="false"
@@ -415,7 +417,9 @@
 								items="{
 									path: 'to_DocumentItem'
 									
-        						}">
+        						}"
+								mode="MultiSelect"
+								>
 								<columns>
 									<Column
 										demandPopin="true"
@@ -426,12 +430,6 @@
 									<Column>
 										<Text
 											text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.PurchasingDocument}" />
-									</Column>
-									<Column
-										demandPopin="true"
-										minScreenWidth="Tablet">
-										<Text
-											text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.InvoicedNetAmount}" />
 									</Column>
 									<Column
 										demandPopin="true"
@@ -449,7 +447,20 @@
 										demandPopin="true"
 										minScreenWidth="Tablet">
 										<Text
+											text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.InvoicedNetAmount}" />
+									</Column>
+									<Column
+										demandPopin="true"
+										minScreenWidth="Tablet">
+										<Text
 											text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.TotalItemGap}" />
+									</Column>
+									<Column id="ToApprove" width="100px" hAlign="Center" >
+										<customData>
+											<core:CustomData key="p13nData"
+												value='\{"columnKey": "ToApprove", "columnIndex":"100", "leadingProperty": "ToApprove"}' />
+										</customData>
+										<Text text="{i18n>Detail.Section.ItemsWithGaps.ColumnText.Approve}" />
 									</Column>
 								</columns>
 								<items>
@@ -463,14 +474,7 @@
 												text="{PurchasingDocument}/{PurchasingDocumentItem}"
 												press=".onPressLinkPurchasingDocument" />
 											
-											<ObjectNumber
-												emphasized="true"
-												number="{
-													parts: ['NetAmount', 'DocumentCurrency'],
-													type: 'sap.ui.model.type.Currency',
-													formatOptions: {showMeasure: false}
-												}"
-												unit="{DocumentCurrency}" />
+											
 										
 											<ObjectNumber
 												emphasized="true"
@@ -485,7 +489,16 @@
 												emphasized="true"
 												number="{QuantityGap}"
 												unit="{QuantityUoM}" />
-										
+
+											<ObjectNumber
+											emphasized="true"
+											number="{
+												parts: ['NetAmount', 'DocumentCurrency'],
+												type: 'sap.ui.model.type.Currency',
+												formatOptions: {showMeasure: false}
+											}"
+											unit="{DocumentCurrency}" />
+									
 											<ObjectNumber
 												emphasized="true"
 												number="{
@@ -494,7 +507,11 @@
 													formatOptions: {showMeasure: false}
 												}"
 												unit="{DocumentCurrency}" />
-
+												<applium:Switch type="AcceptReject" state="{ToApprove}" enabled="{ItemBlocked}" switchover="onSwitchOver" switchleave="onSwitchLeave">
+													<applium:layoutData>
+														<FlexItemData growFactor="1" />
+													</applium:layoutData>
+												</applium:Switch>
 										</cells>
 									</ColumnListItem>
 								</items>
@@ -520,9 +537,12 @@
                         <uxap:blocks>
                             <VBox id="vboxFeed"
                                 width="100%">
-                                <!--
-                                <FeedInput id="feedInput" post=".onPostComment" icon="sap-icon://employee" value="{detailView>/newComment}" rows="3" maxLength="1000" />
-                                -->
+                                <FeedInput id="feedInput"
+								 		   post=".onPostComment"
+								  		   icon="sap-icon://employee"
+								   		   value="{detailView>/newComment}"
+								           rows="3"
+									       maxLength="1000" />
                                 <List id="feedList"
                                     items="{
 										path: 'to_DocumentComment',
@@ -734,8 +754,8 @@
 					text="{i18n>Detail.Footer.Cancel}"
 					visible="{detailView>/changes}"
 					tooltip="{i18n>Detail.Footer.CancelTooltip}"
-					press=".onPressCancel" />
-				<Button
+					press=".onCloseDetailPress" />
+				<!-- <Button
 					type="Default"
 					text="{i18n>Detail.Footer.Refer}"
 					visible="{StatutWf}"
@@ -746,7 +766,7 @@
 					text="{i18n>Detail.Footer.Transfer}"
 					visible="{= ${StatutWf} === true ? false : true }"
 					tooltip="{i18n>Detail.Footer.TransferTooltip}"
-					press=".onPressTransfer" />
+					press=".onPressTransfer" /> -->
 			</OverflowToolbar>
 		</uxap:footer>
 
