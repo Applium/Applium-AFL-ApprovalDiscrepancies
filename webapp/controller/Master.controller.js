@@ -66,6 +66,8 @@ sap.ui.define(
         this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
         this.getRouter().attachBypassed(this.onBypassed, this);
 
+        //this.getOwnerComponent().getEventBus().subscribe("Master", "DeactivateColumns", this.onRefresh(), this);
+
         //this.getModel("appView")
 
         /*
@@ -392,6 +394,8 @@ sap.ui.define(
       },
 
       _onMasterMatched: function () {
+        //this.getOwnerComponent().getEventBus().subscribe("Master", "DeactivateColumns", this.onRefresh(), this);
+        //this.onRefresh();
         this.getModel("appView").attachPropertyChange(
           function (oEvent) {
             var param = oEvent.getParameter("value"),
@@ -1056,9 +1060,9 @@ sap.ui.define(
 //         });
 //       },
 
-//       _deactivateColumns: function (sChannelId, sEventId) {
-//         this._oMasterSmartTable.deactivateColumns(["ActionButtons", "ImputationCenter"]);
-//       },
+// _deactivateColumns: function (sChannelId, sEventId) {
+//   this._oMasterSmartTable.deactivateColumns(["ActionButtons", "ImputationCenter"]);
+// },
 
 //       _refreshList: function (sChannelId, sEventId) {
 //         this._oMasterTable.getBinding("items").refresh(true);

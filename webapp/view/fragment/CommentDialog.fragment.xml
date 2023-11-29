@@ -1,35 +1,31 @@
-<core:FragmentDefinition
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core">
+<core:FragmentDefinition xmlns="sap.m"
+                         xmlns:core="sap.ui.core">
 	<Dialog
-		title="{= ${appView>/sActionSource} === 'Reject' ? ${i18n>App.Comment.Title.Reject} : ${i18n>App.Comment.Title.Validate}}"
-		type="Message"
-		 >
+	        title="{i18n>Detail.comment.Title}"
+	        type="Message"
+	        afterClose="onCommentAfterClose">
 		<content>
 			<MessageStrip
-				text="{= ${appView>/sActionSource} === 'Reject' ? ${i18n>App.Comment.Warning} : ${i18n>App.Comment.Info}}"
-				type="{= ${appView>/sActionSource} === 'Reject' ? 'Warning' : 'Information'}"
+				visible="{detailView>/comment/warningVisible}"
+				text="{i18n>Detail.comment.warning}"
+				type="Warning"
 				showIcon="true"
-				showCloseButton="false" />
-			<TextArea
-				width="50em"
-				rows="5"
-				placeholder=""
-				maxLength="1000"
-				valueLiveUpdate="true"
-				value="{appView>/comment/value}" />
+				showCloseButton="false"></MessageStrip>
+			<TextArea width="100%"
+					  placeholder=""
+			          liveChange="onCommentTextLiveChange"
+			          value="{detailView>/comment/value}"></TextArea>
 		</content>
 		<beginButton>
 			<Button
-				text="{i18n>App.Comment.Submit}"
-				enabled="{= ${appView>/sActionSource} === 'Reject' ? !!${appView>/comment/value} : true}"
-				press=".onPressSubmitComment" />
+			        text="{i18n>Detail.comment.Submit}"
+			        enabled="true"
+			        press="onCommentBeginPress"></Button>
 		</beginButton>
 		<endButton>
 			<Button
-				text="{i18n>App.Comment.Cancel}"
-				press=".onPressCancelComment" />
+			        text="{i18n>Detail.comment.Cancel}"
+			        press="onCommentEndPress"></Button>
 		</endButton>
-
 	</Dialog>
 </core:FragmentDefinition>

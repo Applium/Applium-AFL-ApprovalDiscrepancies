@@ -11,6 +11,7 @@ sap.ui.define(
     "sap/ui/core/format/DateFormat",
     "sap/ui/Device",
     "sap/m/MessageToast",
+    "sap/ui/core/Fragment",
   ],
   function (
     SuiteLibrary,
@@ -23,7 +24,8 @@ sap.ui.define(
     Item,
     DateFormat,
     Device,
-    MessageToast
+    MessageToast,
+    Fragment
   ) {
     "use strict";
     //jQuery.sap.require("sap.suite.ui.commons.ProcessFlowZoomLevel");
@@ -46,6 +48,16 @@ sap.ui.define(
           busy: false,
           delay: 0,
           lineItemListTitle: this.getResourceBundle().getText("Detail.LineItemTableHeading"),
+          document: {
+            opened: false,
+          },
+          comment: {
+            value: "",
+            beginEnabled: false,
+            warningVisible: false,
+            mandatory: true,
+          },
+          validateButtonPressed: false,
         });
 
         //Pending uploads
@@ -55,6 +67,7 @@ sap.ui.define(
         this.getRouter().getRoute("pdf").attachPatternMatched(this._onObjectMatched, this);
 
         this.setModel(this._oDetailModel, "detailView");
+        //this._oDetailModel = this.getModel("detailView");
 
         this._initDetailModel();
 
@@ -70,6 +83,7 @@ sap.ui.define(
 
         this.getODataModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
       },
+
       onBeforeRendering: function () {
         // if (
         //   this._oDetailModel.setProperty("/approvalStepsVisible") === true &&
@@ -97,49 +111,9 @@ sap.ui.define(
       onBeforeRebindTable: function (oEvent) {
         var oBindingParams = oEvent.getParameter("bindingParams");
         oBindingParams.parameters.numberOfExpandedLevels = 1;
-        // oBindingParams.parameters.select += ",DocumentId,DocumentItemId,ItemBlocked";
+        oBindingParams.parameters.select += ",DocumentId,DocumentItemId,ItemBlocked";
       },
 
-      // _onDownloadPDF: function () {
-      //   var oView = this.getView(),
-      //     oElementBinding = oView.getElementBinding(),
-      //     oPDFViewer = new PDFViewer(),
-      //     sPath,
-      //     oVIMDocument,
-      //     oDataModel = this.getODataModel(),
-      //     sPDFPath = "";
-
-      //   // No data for the binding
-      //   if (!oElementBinding.getBoundContext()) {
-      //     this.getRouter().getTargets().display("detailObjectNotFound");
-      //     // if object could not be found, the selection in the master list
-      //     // does not make sense anymore.
-      //     this.getOwnerComponent().oListSelector.clearMasterListSelection();
-      //     return;
-      //   }
-
-      //   sPath = oElementBinding.getPath();
-
-      //   this.getOwnerComponent().oListSelector.selectAListItem(sPath);
-
-      //   //Only get PDF keys (impossible to get media type as it's a media field)
-      //   oVIMDocument = oView.getBindingContext().getObject({
-      //     expand: "to_DocumentPDF",
-      //     select:
-      //       "to_DocumentPDF/DocumentId,to_DocumentPDF/BusinessObjectType,to_DocumentPDF/ContentRepositoryId,to_DocumentPDF/ArchiveDocumentId",
-      //   });
-
-      //   //Open PDF only if exists
-      //   if (oVIMDocument.to_DocumentPDF) {
-      //     sPDFPath =
-      //       oDataModel.sServiceUrl + "/" + oDataModel.createKey("DocumentPDF", oVIMDocument.to_DocumentPDF) + "/$value";
-
-      //     oPDFViewer.setSource(sPDFPath);
-      //     oPDFViewer.downloadPDF();
-      //   } else {
-      //     oPDFViewer.setSource("");
-      //   }
-      // },
       /**
        * Toggle between full and non full screen mode.
        */
@@ -627,7 +601,7 @@ sap.ui.define(
           path: sObjectPath,
           parameters: {
             // expand: "to_DocumentPDF,to_ApprovalType,to_StatusVIM,to_DocumentComment,to_DocumentItem",
-            expand: "to_DocumentPDF,to_ApprovalType,to_StatusVIM",
+            expand: "to_DocumentPDF,to_ApprovalType,to_StatusVIM,to_DocumentItem",
           },
           events: {
             change: this._onBindingChange.bind(this),
@@ -792,6 +766,193 @@ sap.ui.define(
         oProcessFlow.getBinding("nodes").refresh();
       },
 
+      onPressSave: function () {
+        this._oDetailModel.setProperty("/validateButtonPressed", true);
+        this._oDetailModel.setProperty("/saveButtonPressed", true);
+        this._onCommentDisplay();
+      },
+
+      onPressValidate: function () {
+        this._oDetailModel.setProperty("/validateButtonPressed", true);
+        this._onCommentDisplay();
+      },
+
+      //Active or not the save button (because comment is mandatory)
+      onCommentTextLiveChange: function (oEvent) {
+        var sText = oEvent.getParameter("value"),
+          bMandatory = this._oDetailModel.getProperty("/validateButtonPressed");
+
+        this._oDetailModel.setProperty("/comment/beginEnabled", sText.length > 0 || !bMandatory);
+      },
+
+      onCommentPress: function () {
+        this._oDetailModel.setProperty("/validateButtonPressed", false);
+        this._onCommentDisplay();
+      },
+
+      //Click on Send button
+      onCommentBeginPress: function () {
+        var sPath = this.getView().getElementBinding().getPath(),
+          //oNextItem = this.getOwnerComponent().oListSelector.findNextItem(sPath),
+          //oEventBus = sap.ui.getCore().getEventBus(),
+          oAppViewModel = this.getModel("appView"),
+          sBindingPath = this.getView().getBindingContext().getPath(),
+          oBindingObject = this.getView().getBindingContext().getObject(sBindingPath, {
+            expand: "to_DocumentItem",
+          }),
+          sText = this._oDetailModel.getProperty("/comment/value"),
+          aText = sText.split("\n"),
+          aComments = [],
+          aSentences = [""],
+          iStrLn = 0,
+          iSentence = 0,
+          aItemsToValidate = [],
+          sApproveItemsPath = "";
+
+        if (sText) {
+          aText.forEach(function (sTxt, iIdx) {
+            var aWords = sTxt.split(" ");
+
+            //Each elem of aText is separated by \n, so we keep the new line info
+            if (iIdx > 0) {
+              iSentence += 1;
+              aSentences[iSentence] = "";
+            }
+
+            //For each word
+            aWords.forEach(function (sWord, iIndex) {
+              var aTmpSplit;
+
+              //Check if current sentence + new word > 130 chars
+              iStrLn = aSentences[iSentence].length + sWord.length;
+              //If to long, begin a new sentence.
+              if (iStrLn > 130) {
+                iSentence += 1;
+                aSentences[iSentence] = "";
+              }
+
+              //If not to long or new sentence, continue
+              aSentences[iSentence] = aSentences[iSentence] + sWord + " ";
+
+              //If word length > 130chars, we split it
+              if (aSentences[iSentence].length > 130) {
+                aTmpSplit = aSentences[iSentence].match(/.{1,130}/g);
+                aTmpSplit.forEach(function (sTmpStr) {
+                  aSentences[iSentence] = sTmpStr;
+                  if (sTmpStr.length === 130) {
+                    iSentence += 1;
+                    aSentences[iSentence] = "";
+                  }
+                });
+              }
+            });
+          });
+
+          //Create object to send to backend (comments)
+          aSentences.forEach(function (sTextLine, iIndex) {
+            aComments.push({
+              DocumentId: oBindingObject.DocumentId,
+              TextId: "" + iIndex,
+              TextObject: sTextLine,
+              LogDate: new Date(),
+            });
+          });
+        }
+
+        oAppViewModel.setProperty("/busy", true);
+
+        //Comments button pressed
+        if (!this._oDetailModel.getProperty("/validateButtonPressed")) {
+          //Call service to add comment
+          this.getODataModel().create(
+            "/AddComment",
+            {
+              DocumentId: oBindingObject.DocumentId,
+              to_DocumentComment: aComments,
+            },
+            {
+              success: function (response) {
+                this.getODataModel().refresh(true);
+                // this.byId("timelineId").getBinding("content").refresh();
+                oAppViewModel.setProperty("/busy", false);
+                MessageToast.show(this.getResourceBundle().getText("Detail.comment.SuccessMessage"));
+              }.bind(this),
+
+              error: function (oAddCommentError) {
+                oAppViewModel.setProperty("/busy", false);
+                MessageBox.error(this.determineODataErrorText(oAddCommentError));
+              }.bind(this),
+            }
+          );
+        }
+
+        //Save button pressed
+        else {
+          //Get items
+          oBindingObject.to_DocumentItem.forEach(
+            function (oItem) {
+              if (oItem.ItemBlocked) {
+                aItemsToValidate.push({
+                  DocumentId: oItem.DocumentId,
+                  DocumentItemId: oItem.DocumentItemId,
+                  ToApprove: oItem.ToApprove,
+                });
+              }
+            }.bind(this)
+          );
+
+          //Call service according to role
+          this.getODataModel().create(
+            "/ApproveItems",
+            {
+              DocumentId: oBindingObject.DocumentId,
+              to_DocumentComment: aComments,
+              to_DocumentItem: aItemsToValidate,
+            },
+            {
+              success: function (response) {
+                // if (this.getODataModel().hasPendingChanges()) {
+                // 	this.getODataModel().resetChanges();
+                // }
+                MessageToast.show(this.getResourceBundle().getText("Detail.approveitems.SuccessMessage"));
+                oAppViewModel.setProperty("/busy", false);
+                //oEventBus.publish("Detail", "NavTo", "");
+                this.getRouter().navTo("master");
+              }.bind(this),
+
+              error: function (oValidateError) {
+                oAppViewModel.setProperty("/busy", false);
+                MessageBox.error(this.determineODataErrorText(oValidateError));
+              }.bind(this),
+            }
+          );
+        }
+
+        //Clear comments in view model
+        this._refreshViewModel();
+
+        this._oCommentDialog.close();
+      },
+
+      //Click on Cancel on comment popup
+      onCommentEndPress: function () {
+        //Clear agents and comments in view model
+        this._refreshViewModel();
+        this._oCommentDialog.close();
+      },
+
+      //Refresh View Model
+      _refreshViewModel: function () {
+        this._oDetailModel.setProperty("/comment", {
+          value: "",
+          beginEnabled: false,
+          warningVisible: false,
+          mandatory: true,
+        });
+
+        this._oDetailModel.setProperty("/validateButtonPressed", false);
+      },
+
       /*** Init models ***/
 
       _initDetailModel: function () {
@@ -806,6 +967,13 @@ sap.ui.define(
           sSelectedDocumentType: "", //for Archivelink attachment
           aAuthorizedExtension: [""], //for Archivelink attachment
           oAttachemntMode: {},
+          comment: {
+            value: "",
+            beginEnabled: false,
+            warningVisible: false,
+            mandatory: true,
+          },
+          validateButtonPressed: false,
         });
       },
 
@@ -821,17 +989,6 @@ sap.ui.define(
 
         //Reset approvalSteps in detail model
         this._oDetailModel.setProperty("/approvalSteps", []);
-
-        /*
-			if (oBindedObject.WorkflowType === "A") {
-			    
-			//if (this.byId("processflow").getLanes().length > 0){
-				this._oDetailModel.setProperty("/approvalStepsVisible", true);
-			   // }
-			} else {
-				this._oDetailModel.setProperty("/approvalStepsVisible", false);
-			}
-			*/
 
         oProcessFlow.setZoomLevel("One");
         //oProcessFlow.updateModel();
@@ -895,6 +1052,60 @@ sap.ui.define(
           }.bind(this)
         );
         oBinding.refresh();
+      },
+
+      _onCommentDisplay: function () {
+        var bWarning,
+          bMandatory,
+          bValidButton = this._oDetailModel.getProperty("/validateButtonPressed"),
+          sBindingPath = this.getView().getBindingContext().getPath(),
+          oBindingObject = this.getView().getBindingContext().getObject(sBindingPath, {
+            expand: "to_DocumentItem",
+          });
+
+        //Clear current comment
+        this._oDetailModel.setProperty("/comment/value", "");
+
+        //When validate button pressed and at least one item in dispute, display warning
+        if (
+          bValidButton &&
+          oBindingObject.to_DocumentItem.some(function (oItem) {
+            return oItem.ItemBlocked && !oItem.ToApprove;
+          })
+        ) {
+          bWarning = true;
+          bMandatory = true;
+        }
+
+        //When validate button pressed and no item in dispute, hide warning and comment is optionnal
+        else if (bValidButton) {
+          bWarning = false;
+          bMandatory = false;
+        }
+
+        //When press Comment button, comment is mandatory and no warning is shown
+        else {
+          bWarning = false;
+          bMandatory = true;
+        }
+
+        this._oDetailModel.setProperty("/comment/mandatory", bMandatory);
+        this._oDetailModel.setProperty("/comment/beginEnabled", !bMandatory);
+        this._oDetailModel.setProperty("/comment/warningVisible", bWarning);
+
+        if (!this._oCommentDialog) {
+          Fragment.load({
+            name: "fr.applium.afl.aflapproval.view.fragment.CommentDialog",
+            id: this.getView().getId(),
+            controller: this,
+          }).then((oDialog) => {
+            this._oCommentDialog = oDialog;
+            this.getView().addDependent(this._oCommentDialog);
+            this._oCommentDialog.open();
+          });
+        } else {
+          this._oCommentDialog.open();
+        }
       },
     });
   }

@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m"
+                         xmlns:core="sap.ui.core">
+	        <ResponsivePopover id="tooltipPopover" 
+	        	showHeader="false" 		
+	        	class="sapUiPopupWithPadding"
+	        	placement="Auto" >
+	          <content>
+	          	<VBox>
+		          	<VBox>
+		          		<VBox class="sapUiSmallMargin">
+							<HBox alignItems="Center"
+								  justifyContent="Start">
+								<Switch type="AcceptReject" state="true" enabled="false" />
+								<ObjectStatus
+									class="sapUiSmallMarginBegin"
+									text="{i18n>detail.tooltip.validated}"
+									state="Success" />
+							</HBox>
+							<Text text="{i18n>detail.tooltip.validtext1}" />
+							<Text text="{i18n>detail.tooltip.validtext2}" />
+						</VBox>
+						<VBox class="sapUiSmallMargin">
+							<HBox alignItems="Center"
+								  justifyContent="Start">
+								<Switch type="AcceptReject" state="false" enabled="false" />
+								<ObjectStatus
+									class="sapUiSmallMarginBegin"
+									text="{i18n>detail.tooltip.litigation}"
+									state="Error" />
+							</HBox>
+							<Text text="{i18n>detail.tooltip.litigationtext1}" />
+							<Text text="{i18n>detail.tooltip.litigationtext2}" />
+							<Text text="{i18n>detail.tooltip.litigationtext3}" />
+						</VBox>
+					</VBox>
+				</VBox>
+	          </content>
+	        </ResponsivePopover>
+</core:FragmentDefinition>

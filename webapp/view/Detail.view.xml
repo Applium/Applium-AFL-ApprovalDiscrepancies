@@ -180,19 +180,19 @@
 									}"
 									unit="{DocumentCurrency}" />
 								<Label 
-									text="{/#DocumentType/CrAmnt/@sap:label}" />
+									text="{/#DocumentType/TotalAmountInvoiced/@sap:label}" />
 								<ObjectNumber 
 									number="{
-										parts: ['CrAmnt', 'DocumentCurrency'],
+										parts: ['TotalAmountInvoiced', 'DocumentCurrency'],
 										type: 'sap.ui.model.type.Currency',
 										formatOptions: {showMeasure: false}
 									}"
 									unit="{DocumentCurrency}" />
 								<Label 
-									text="{/#DocumentType/CrAmntRec/@sap:label}" />
+									text="{/#DocumentType/TotalAmountReceived/@sap:label}" />
 								<ObjectNumber 
 									number="{
-										parts: ['CrAmntRec', 'DocumentCurrency'],
+										parts: ['TotalAmountReceived', 'DocumentCurrency'],
 										type: 'sap.ui.model.type.Currency',
 										formatOptions: {showMeasure: false}
 									}"
@@ -418,7 +418,6 @@
 									path: 'to_DocumentItem'
 									
         						}"
-								mode="MultiSelect"
 								>
 								<columns>
 									<Column
@@ -473,9 +472,6 @@
 											<Link
 												text="{PurchasingDocument}/{PurchasingDocumentItem}"
 												press=".onPressLinkPurchasingDocument" />
-											
-											
-										
 											<ObjectNumber
 												emphasized="true"
 												number="{
@@ -507,11 +503,11 @@
 													formatOptions: {showMeasure: false}
 												}"
 												unit="{DocumentCurrency}" />
-												<applium:Switch type="AcceptReject" state="{ToApprove}" enabled="{ItemBlocked}" switchover="onSwitchOver" switchleave="onSwitchLeave">
-													<applium:layoutData>
-														<FlexItemData growFactor="1" />
-													</applium:layoutData>
-												</applium:Switch>
+											<applium:Switch type="AcceptReject" state="{ToApprove}" enabled="{ItemBlocked}" switchover="onSwitchOver" switchleave="onSwitchLeave">
+												<applium:layoutData>
+													<FlexItemData growFactor="1" />
+												</applium:layoutData>
+											</applium:Switch>
 										</cells>
 									</ColumnListItem>
 								</items>
@@ -686,7 +682,7 @@
 											}">
 							<upload:attributes>
 								<ObjectAttribute
-									title="{/#ZI_VIMDocumentAttachmentType/FileSize/@sap:label}"
+									title="{/#DocumentAttachmentType/FileSize/@sap:label}"
 									text="{
 										path: 'FileSize',
 										formatter: '.formatter.documentSize'
@@ -694,7 +690,7 @@
 									active="false"
 									visible="{= !!${FileSize}}"/>
 								<ObjectAttribute
-									title="{/#ZI_VIMDocumentAttachmentType/CreationDate/@sap:label}"
+									title="{/#DocumentAttachmentType/CreationDate/@sap:label}"
 									text="{
 										path: 'CreationDate',
 										type: 'sap.ui.model.type.Date',
@@ -706,7 +702,7 @@
 									active="false"
 									visible="{= !!${CreationDate}}"/>
 								<ObjectAttribute
-									title="{/#ZI_VIMDocumentAttachmentType/CreatedByUserName/@sap:label}"
+									title="{/#DocumentAttachmentType/CreatedByUserName/@sap:label}"
 									text="{
 										path: 'CreatedByUserName'
 									}"
@@ -743,7 +739,7 @@
 					tooltip="{i18n>Detail.Footer.RejectTooltip}"
 					press=".onPressReject" />
 				<Button
-					type="Default"
+					type="Accept"
 					text="{i18n>Detail.Footer.Save}"
 					visible="{detailView>/changes}"
 					enabled="{detailView>/saveEnabled}"
@@ -751,22 +747,10 @@
 					press=".onPressSave" />
 				<Button
 					type="Default"
-					text="{i18n>Detail.Footer.Cancel}"
+					text="{i18n>Detail.Footer.AddComment}"
 					visible="{detailView>/changes}"
 					tooltip="{i18n>Detail.Footer.CancelTooltip}"
-					press=".onCloseDetailPress" />
-				<!-- <Button
-					type="Default"
-					text="{i18n>Detail.Footer.Refer}"
-					visible="{StatutWf}"
-					tooltip="{i18n>Detail.Footer.ReferTooltip}"
-					press=".onPressRefer" />
-				<Button
-					type="Default"
-					text="{i18n>Detail.Footer.Transfer}"
-					visible="{= ${StatutWf} === true ? false : true }"
-					tooltip="{i18n>Detail.Footer.TransferTooltip}"
-					press=".onPressTransfer" /> -->
+					press=".onCommentPress" />
 			</OverflowToolbar>
 		</uxap:footer>
 

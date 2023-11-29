@@ -71,7 +71,7 @@
             <Annotations Target="SAP.DocumentType/TypologyApproval">
                 <Annotation Term="Common.ValueList">
                     <Record>
-                        <!-- > <PropertyValue Property="CollectionPath" String="" /> </!-->
+                        <PropertyValue Property="CollectionPath" String="" />
                         <PropertyValue Property="SearchSupported" Bool="false" />
                         <PropertyValue Property="Parameters">
                             <Collection>
