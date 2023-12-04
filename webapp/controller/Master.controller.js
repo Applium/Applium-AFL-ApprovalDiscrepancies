@@ -305,7 +305,6 @@ sap.ui.define(
           "to_DocumentPDF/PdfIndex"
         );
         oBindingParameters.parameters["select"] = aSelect.join(",");
-
         if (!oBindingParameters.sorter.length) {
           oBindingParameters.sorter.push(new sap.ui.model.Sorter("DocumentId", true));
         }
