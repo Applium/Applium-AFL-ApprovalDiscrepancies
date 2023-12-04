@@ -738,13 +738,13 @@
 					visible="{= ${StatutWf} === true ? false : true }"
 					tooltip="{i18n>Detail.Footer.RejectTooltip}"
 					press=".onPressReject" />
-				<Button
+				<!-- <Button
 					type="Accept"
 					text="{i18n>Detail.Footer.Save}"
 					visible="{detailView>/changes}"
 					enabled="{detailView>/saveEnabled}"
 					tooltip="{i18n>Detail.Footer.SaveTooltip}"
-					press=".onPressSave" />
+					press=".onPressSave" /> -->
 				<Button
 					type="Default"
 					text="{i18n>Detail.Footer.AddComment}"

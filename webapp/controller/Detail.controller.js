@@ -58,6 +58,8 @@ sap.ui.define(
             mandatory: true,
           },
           validateButtonPressed: false,
+          rejectButtonPressed: false,
+          addCommentButtonPressed: false,
         });
 
         //Pending uploads
@@ -766,14 +768,19 @@ sap.ui.define(
         oProcessFlow.getBinding("nodes").refresh();
       },
 
-      onPressSave: function () {
-        this._oDetailModel.setProperty("/validateButtonPressed", true);
-        this._oDetailModel.setProperty("/saveButtonPressed", true);
-        this._onCommentDisplay();
-      },
+      // onPressSave: function () {
+      //   this._oDetailModel.setProperty("/validateButtonPressed", true);
+      //   // this._oDetailModel.setProperty("/saveButtonPressed", true);
+      //   this._onCommentDisplay();
+      // },
 
       onPressValidate: function () {
         this._oDetailModel.setProperty("/validateButtonPressed", true);
+        this._onCommentDisplay();
+      },
+
+      onPressReject: function () {
+        this._oDetailModel.setProperty("/rejectButtonPressed", true);
         this._onCommentDisplay();
       },
 
@@ -786,7 +793,7 @@ sap.ui.define(
       },
 
       onCommentPress: function () {
-        this._oDetailModel.setProperty("/validateButtonPressed", false);
+        this._oDetailModel.setProperty("/addCommentButtonPressed", true);
         this._onCommentDisplay();
       },
 
@@ -862,7 +869,7 @@ sap.ui.define(
         oAppViewModel.setProperty("/busy", true);
 
         //Comments button pressed
-        if (!this._oDetailModel.getProperty("/validateButtonPressed")) {
+        if (this._oDetailModel.getProperty("/addCommentButtonPressed")) {
           //Call service to add comment
           this.getODataModel().create(
             "/AddComment",
@@ -886,8 +893,8 @@ sap.ui.define(
           );
         }
 
-        //Save button pressed
-        else {
+        //Validate button pressed
+        if (this._oDetailModel.getProperty("/validateButtonPressed")) {
           //Get items
           oBindingObject.to_DocumentItem.forEach(
             function (oItem) {
@@ -926,6 +933,60 @@ sap.ui.define(
               }.bind(this),
             }
           );
+        } else if (this._oDetailModel.getProperty("/rejectButtonPressed")) {
+          let sDocumentId = this.getView().getBindingContext().getObject().DocumentId,
+            LogComment = this.getView().getModel("detailView").getProperty("/comment/value"),
+            oAppModel = this.getModel("appView");
+
+          oAppModel.setProperty("/busy", true);
+
+          let oRejectedInvoice = {
+            DocumentId: sDocumentId,
+            LogComment: LogComment,
+            to_DocumentComment: aComments,
+          };
+
+          this.getODataModel().create("/ActionReject", oRejectedInvoice, {
+            success: (oValidateSuccess) => {
+              let sError = "";
+              let sSuccess = "";
+
+              oValidateSuccess.to_Document.results.forEach((oDocumentReturn) => {
+                if (oDocumentReturn.to_Message && oDocumentReturn.to_Message.results) {
+                  oDocumentReturn.to_Message.results.forEach((oMessage) => {
+                    if (oMessage.MessageType === "E") {
+                      if (sError) {
+                        sError += "\n";
+                      }
+                      sError += oMessage.ReturnMessage;
+                    } else if (oMessage.MessageType === "S") {
+                      if (sSuccess) {
+                        sSuccess += "\n";
+                      }
+                      sSuccess += oMessage.ReturnMessage;
+                    }
+                  });
+                }
+              });
+
+              //Release app
+              oAppModel.setProperty("/busy", false);
+              this.getODataModel().refresh(true);
+              this.getRouter().navTo("master");
+              this.getOwnerComponent().getEventBus().publish("Master", "RefreshList");
+
+              //In case of error, display them
+              if (sError) {
+                this.handleErrorMessage(sError);
+              } else {
+                this.handleSuccessMessage(sSuccess);
+              }
+            },
+            error: (oValidateError) => {
+              this.handleErrorMessage(this.determineODataErrorText(oValidateError));
+              oAppModel.setProperty("/busy", false);
+            },
+          });
         }
 
         //Clear comments in view model
@@ -951,6 +1012,8 @@ sap.ui.define(
         });
 
         this._oDetailModel.setProperty("/validateButtonPressed", false);
+        this._oDetailModel.setProperty("/addCommentButtonPressed", false);
+        this._oDetailModel.setProperty("/rejectButtonPressed", false);
       },
 
       /*** Init models ***/
@@ -974,6 +1037,8 @@ sap.ui.define(
             mandatory: true,
           },
           validateButtonPressed: false,
+          addCommentButtonPressed: false,
+          rejectButtonPressed: false,
         });
       },
 
