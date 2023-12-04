@@ -7,7 +7,7 @@ sap.ui.define(["sap/ui/test/opaQunit", "./pages/List", "./pages/Detail"], functi
 
   opaTest("Should open the share menu and display the share buttons on the detail page", function (Given, When, Then) {
     // Arrangements
-    Given.iStartMyFLPApp({ intent: "AFLApproval-display" });
+    Given.iStartMyFLPApp({ intent: "AFLApprovalDisc-display" });
 
     // Actions
     When.onTheMasterPage.iPressOnTheObjectAtPosition(1).and.iRememberTheSelectedItem();

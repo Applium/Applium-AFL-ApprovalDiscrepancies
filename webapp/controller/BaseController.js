@@ -3,7 +3,7 @@ sap.ui.define(
   function (Controller, History, MessageBox) {
     "use strict";
 
-    return Controller.extend("fr.applium.afl.aflapproval.controller.BaseController", {
+    return Controller.extend("fr.applium.afl.aflapprovaldisc.controller.BaseController", {
       /**
        * Convenience method for accessing the router in every controller of the application.
        * @public

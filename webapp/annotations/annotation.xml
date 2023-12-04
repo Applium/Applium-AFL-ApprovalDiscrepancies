@@ -2,9 +2,9 @@
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
         <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common" />
     </edmx:Reference>
-    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Communication.xml">
+    <!-- <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Communication.xml">
         <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication" />
-    </edmx:Reference>
+    </edmx:Reference> -->
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
         <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI" />
     </edmx:Reference>
@@ -68,7 +68,7 @@
                 <Annotation Term="com.sap.vocabularies.Common.v1.IsDigitSequence" Bool="true" />
             </Annotations>
 
-            <Annotations Target="SAP.DocumentType/TypologyApproval">
+            <!-- <Annotations Target="SAP.DocumentType/TypologyApproval">
                 <Annotation Term="Common.ValueList">
                     <Record>
                         <PropertyValue Property="CollectionPath" String="" />
@@ -89,12 +89,12 @@
                 <Annotation Term="Common.Text" Path="to_TypologyApproval/TypologyApprovalText">
                     <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly" />
                 </Annotation>
-            </Annotations>
+            </Annotations> -->
 
-            <Annotations Target="SAP.DocumentType/CompanyCode">
+            <!-- <Annotations Target="SAP.DocumentType/CompanyCode">
                 <Annotation Term="Common.ValueList">
                     <Record>
-                        <!-- ><PropertyValue Property="CollectionPath" String="VHCompanyCode" /> </!-->
+                        <PropertyValue Property="CollectionPath" String="VHCompanyCode" />
                         <PropertyValue Property="SearchSupported" Bool="true" />
                         <PropertyValue Property="Parameters">
                             <Collection>
@@ -109,7 +109,7 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
-            </Annotations>
+            </Annotations> -->
 
             <Annotations Target="SAP.DocumentType/DocumentTypeVim">
                 <Annotation Term="Common.ValueList">
@@ -141,10 +141,10 @@
                 </Annotation>
             </Annotations>
 
-            <Annotations Target="SAP.DocumentType/DocumentReference">
+            <!-- <Annotations Target="SAP.DocumentType/DocumentReference">
                 <Annotation Term="Common.ValueList">
                     <Record>
-                        <!--<PropertyValue Property="CollectionPath" String="VHInvoiceReference" />  -->
+                        <PropertyValue Property="CollectionPath" String="VHInvoiceReference" />
                         <PropertyValue Property="SearchSupported" Bool="true" />
                         <PropertyValue Property="Parameters">
                             <Collection>
@@ -156,12 +156,12 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
-            </Annotations>
+            </Annotations>  -->
 
-            <Annotations Target="SAP.DocumentType/Vendor">
+            <!-- <Annotations Target="SAP.DocumentType/Vendor">
                 <Annotation Term="Common.ValueList">
                     <Record>
-                        <PropertyValue Property="Label" String="{i18n>List.VH.Vendor.Title}" />
+                        <PropertyValue Property="Label" String="{i18n>Master.VH.Vendor.Title}" />
                         <PropertyValue Property="CollectionPath" String="VHVendor" />
                         <PropertyValue Property="SearchSupported" Bool="true" />
                         <PropertyValue Property="Parameters">
@@ -177,9 +177,9 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
-            </Annotations>
+            </Annotations> -->
 
-            <Annotations Target="SAP.DocumentType/DocumentCurrency">
+            <!-- <Annotations Target="SAP.DocumentType/DocumentCurrency">
                 <Annotation Term="Common.ValueList">
                     <Record>
                         <PropertyValue Property="CollectionPath" String="VHDocumentCurrency" />
@@ -197,9 +197,9 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
-            </Annotations>
+            </Annotations> -->
 
-            <Annotations Target="SAP.DocumentType/DocumentId">
+            <!-- <Annotations Target="SAP.DocumentType/DocumentId">
                 <Annotation Term="Common.ValueList">
                     <Record>
                         <PropertyValue Property="CollectionPath" String="VHDocument" />
@@ -215,9 +215,9 @@
                     </Record>
                 </Annotation>
                 <Annotation Term="Common.IsDigitSequence" Bool="true" />
-            </Annotations>
+            </Annotations> -->
 
-            <Annotations Target="SAP.DocumentType/ApprovalType">
+            <!-- <Annotations Target="SAP.DocumentType/ApprovalType">
                 <Annotation Term="Common.ValueList">
                     <Record>
                         <PropertyValue Property="Label" String="{/#DocumentType/ApprovalType/@sap:label}" />
@@ -236,7 +236,7 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
-            </Annotations>
+            </Annotations> -->
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

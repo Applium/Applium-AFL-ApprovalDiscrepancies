@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="fr.applium.afl.aflapproval.controller.App"
+    controllerName="fr.applium.afl.aflapprovaldisc.controller.App"
     displayBlock="true"
     height="100%"
     xmlns="sap.m"

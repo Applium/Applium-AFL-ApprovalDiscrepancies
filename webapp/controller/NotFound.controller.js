@@ -1,16 +1,13 @@
-sap.ui.define([
-    "./BaseController"
-], function (BaseController) {
-    "use strict";
+sap.ui.define(["./BaseController"], function (BaseController) {
+  "use strict";
 
-    return BaseController.extend("fr.applium.afl.aflapproval.controller.NotFound", {
+  return BaseController.extend("fr.applium.afl.aflapprovaldisc.controller.NotFound", {
+    onInit: function () {
+      this.getRouter().getTarget("notFound").attachDisplay(this._onNotFoundDisplayed, this);
+    },
 
-        onInit: function () {
-            this.getRouter().getTarget("notFound").attachDisplay(this._onNotFoundDisplayed, this);
-        },
-
-        _onNotFoundDisplayed : function () {
-            this.getModel("appView").setProperty("/layout", "OneColumn");
-        }
-    });
+    _onNotFoundDisplayed: function () {
+      this.getModel("appView").setProperty("/layout", "OneColumn");
+    },
+  });
 });

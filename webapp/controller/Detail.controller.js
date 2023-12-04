@@ -33,7 +33,7 @@ sap.ui.define(
     // shortcut for sap.m.URLHelper
     var URLHelper = mobileLibrary.URLHelper;
 
-    return BaseController.extend("fr.applium.afl.aflapproval.controller.Detail", {
+    return BaseController.extend("fr.applium.afl.aflapprovaldisc.controller.Detail", {
       formatter: formatter,
 
       /* =========================================================== */
@@ -1160,7 +1160,7 @@ sap.ui.define(
 
         if (!this._oCommentDialog) {
           Fragment.load({
-            name: "fr.applium.afl.aflapproval.view.fragment.CommentDialog",
+            name: "fr.applium.afl.aflapprovaldisc.view.fragment.CommentDialog",
             id: this.getView().getId(),
             controller: this,
           }).then((oDialog) => {
@@ -1223,7 +1223,7 @@ sap.ui.define(
 //   ) {
 //     "use strict";
 
-//     return BaseController.extend("fr.applium.afl.aflapproval.controller.Detail", {
+//     return BaseController.extend("fr.applium.afl.aflapprovaldisc.controller.Detail", {
 //       formatter: formatter,
 //       _oVHDialogs: {},
 
@@ -1703,7 +1703,7 @@ sap.ui.define(
 
 //         if (!this._oUploadPopover) {
 //           Fragment.load({
-//             name: "fr.applium.afl.aflapproval.view.fragment.Upload",
+//             name: "fr.applium.afl.aflapprovaldisc.view.fragment.Upload",
 //             id: this.getView().getId(),
 //             controller: this,
 //           }).then((oPopover) => {
@@ -1956,7 +1956,7 @@ sap.ui.define(
 //             },
 //           });
 //         Fragment.load({
-//           name: "fr.applium.afl.aflapproval.view.fragment." + oParameters.fragmentId,
+//           name: "fr.applium.afl.aflapprovaldisc.view.fragment." + oParameters.fragmentId,
 //           id: this.getView().getId(),
 //           controller: this,
 //         }).then((oDialog) => {
@@ -2168,7 +2168,7 @@ sap.ui.define(
 //       _onCommentDisplay: function () {
 //         if (!this._oCommentDialog) {
 //           Fragment.load({
-//             name: "fr.applium.afl.aflapproval.view.fragment.CommentDialog",
+//             name: "fr.applium.afl.aflapprovaldisc.view.fragment.CommentDialog",
 //             id: this.getView().getId(),
 //             controller: this,
 //           }).then((oDialog) => {
@@ -2184,7 +2184,7 @@ sap.ui.define(
 //       _onCommentNeutralDisplay: function () {
 //         if (!this._oCommentDialogNeutral) {
 //           Fragment.load({
-//             name: "fr.applium.afl.aflapproval.view.fragment.CommentDialogNeutral",
+//             name: "fr.applium.afl.aflapprovaldisc.view.fragment.CommentDialogNeutral",
 //             id: this.getView().getId(),
 //             controller: this,
 //           }).then((oDialog) => {

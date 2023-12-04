@@ -39,7 +39,7 @@ sap.ui.define(["sap/base/util/ObjectPath", "sap/ushell/services/Container"], fun
                     tileType: "sap.ushell.ui.tile.StaticTile",
                     properties: {
                       title: "Invoices to validate",
-                      targetURL: "#AFLApproval-display",
+                      targetURL: "#AFLApprovalDisc-display",
                     },
                   },
                 ],
@@ -52,18 +52,18 @@ sap.ui.define(["sap/base/util/ObjectPath", "sap/ushell/services/Container"], fun
         adapter: {
           config: {
             inbounds: {
-              "AFLApproval-display": {
-                semanticObject: "frappliumaflaflapproval",
+              "AFLApprovalDisc-display": {
+                semanticObject: "frappliumaflaflapprovaldisc",
                 action: "display",
                 description: "A Fiori application.",
-                title: "Invoices to validate",
+                title: "Invoices with approval discrepancies",
                 signature: {
                   parameters: {},
                 },
                 resolutionResult: {
                   applicationType: "SAPUI5",
-                  additionalInformation: "SAPUI5.Component=fr.applium.afl.aflapproval",
-                  url: sap.ui.require.toUrl("fr/applium/afl/aflapproval"),
+                  additionalInformation: "SAPUI5.Component=fr.applium.afl.aflapprovaldisc",
+                  url: sap.ui.require.toUrl("fr/applium/afl/aflapprovaldisc"),
                 },
               },
             },

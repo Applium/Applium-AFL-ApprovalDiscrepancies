@@ -1,5 +1,5 @@
 <mvc:View xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" controllerName="fr.applium.afl.aflapproval.controller.PDF" height="100%">
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" controllerName="fr.applium.afl.aflapprovaldisc.controller.PDF" height="100%">
     <Page class="sapUiNoContentPadding" enableScrolling="false">
         <headerContent>
             <OverflowToolbarButton type="Transparent" tooltip="{i18n>detail.Header.Close}" icon="sap-icon://decline" press=".onPressClosePDF"/>

@@ -1,6 +1,6 @@
 /*global QUnit*/
 
-sap.ui.define(["fr/applium/afl/aflapproval/controller/ListSelector"], function (ListSelector) {
+sap.ui.define(["fr/applium/afl/aflapprovaldisc/controller/ListSelector"], function (ListSelector) {
   "use strict";
 
   QUnit.module("Initialization", {

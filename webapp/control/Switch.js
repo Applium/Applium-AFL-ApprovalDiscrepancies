@@ -1,6 +1,6 @@
 sap.ui.define(["sap/m/Switch"], function (Switch) {
   "use strict";
-  return Switch.extend("fr.applium.afl.aflapproval.control.Switch", {
+  return Switch.extend("fr.applium.afl.aflapprovaldisc.control.Switch", {
     metadata: {
       events: {
         switchover: {

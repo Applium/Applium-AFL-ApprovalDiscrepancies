@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="fr.applium.afl.aflapproval.controller.Detail"
+	controllerName="fr.applium.afl.aflapprovaldisc.controller.Detail"
 	xmlns="sap.m"
 	xmlns:uxap="sap.uxap"
 	xmlns:l="sap.ui.layout"
@@ -9,7 +9,7 @@
 	xmlns:commons="sap.suite.ui.commons"
 	xmlns:upload="sap.m.upload"
 	xmlns:smartTable="sap.ui.comp.smarttable"
-	xmlns:applium="fr.applium.afl.aflapproval.control">
+	xmlns:applium="fr.applium.afl.aflapprovaldisc.control">
 
 	<uxap:ObjectPageLayout 
 		busy="{detailView>/busy}"

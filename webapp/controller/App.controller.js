@@ -1,7 +1,7 @@
 sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel"], function (BaseController, JSONModel) {
   "use strict";
 
-  return BaseController.extend("fr.applium.afl.aflapproval.controller.App", {
+  return BaseController.extend("fr.applium.afl.aflapprovaldisc.controller.App", {
     onInit: function () {
       var oViewModel,
         fnSetAppNotBusy,

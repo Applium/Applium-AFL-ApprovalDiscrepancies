@@ -10,7 +10,7 @@
 | **Service Type**<br>SAP System (ABAP On Premise)                                               |
 
 |**Service URL**<br>http://vm101:443/sap/opu/odata/afl/VIM_APPROVAL_DISC_SRV
-|**Module Name**<br>afl_approval|
+|**Module Name**<br>afl_approvaldisc|
 |**Application Title**<br>Invoices to validate|
 |**Namespace**<br>fr.applium.afl|
 |**UI5 Theme**<br>sap_fiori_3|

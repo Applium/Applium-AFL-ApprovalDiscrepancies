@@ -3,7 +3,7 @@ sap.ui.define(
   function (BaseController, JSONModel, formatter) {
     "use strict";
 
-    return BaseController.extend("fr.applium.afl.aflapproval.controller.PDF", {
+    return BaseController.extend("fr.applium.afl.aflapprovaldisc.controller.PDF", {
       formatter: formatter,
 
       /* =========================================================== */

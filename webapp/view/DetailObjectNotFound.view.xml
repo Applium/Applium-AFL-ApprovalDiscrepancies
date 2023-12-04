@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="fr.applium.afl.aflapproval.controller.DetailObjectNotFound"
+    controllerName="fr.applium.afl.aflapprovaldisc.controller.DetailObjectNotFound"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc">
 

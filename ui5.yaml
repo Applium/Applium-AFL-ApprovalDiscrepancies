@@ -2,7 +2,7 @@
 
 specVersion: "2.5"
 metadata:
-  name: fr.applium.afl.aflapproval
+  name: fr.applium.afl.aflapprovaldisc
 type: application
 server:
   customMiddleware:
@@ -18,7 +18,7 @@ server:
         backend:
           - path: /sap
             url: http://vm101:443
-            client: '200'
+            client: "200"
             destination: VM101
     - name: fiori-tools-appreload
       afterMiddleware: compression
@@ -29,5 +29,5 @@ server:
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
-        component: fr.applium.afl.aflapproval
+        component: fr.applium.afl.aflapprovaldisc
         ui5Theme: sap_fiori_3

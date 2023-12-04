@@ -1,94 +1,94 @@
 _schema-version: "3.2"
-ID: fr-applium-afl-aflapproval
+ID: fr-applium-afl-aflapprovaldisc
 description: A Fiori application.
 version: 0.0.1
 modules:
-- name: fr-applium-afl-aflapproval-destination-content
-  type: com.sap.application.content
-  requires:
-  - name: fr-applium-afl-aflapproval-destination-service
-    parameters:
-      content-target: true
-  - name: fr-applium-afl-aflapproval-repo-host
-    parameters:
-      service-key:
-        name: fr-applium-afl-aflapproval-repo-host-key
-  - name: fr-applium-afl-aflapproval-uaa
-    parameters:
-      service-key:
-        name: fr-applium-afl-aflapproval-uaa-key
-  parameters:
-    content:
-      instance:
-        destinations:
-        - Name: fr-applium-afl-aflapproval_html_repo_host
-          ServiceInstanceName: fr-applium-afl-aflapproval-html5-srv
-          ServiceKeyName: fr-applium-afl-aflapproval-repo-host-key
-          sap.cloud.service: fr-applium-afl-aflapproval
-        - Authentication: OAuth2UserTokenExchange
-          Name: fr-applium-afl-aflapproval_uaa
-          ServiceInstanceName: fr-applium-afl-aflapproval-xsuaa-srv
-          ServiceKeyName: fr-applium-afl-aflapproval-uaa-key
-          sap.cloud.service: fr-applium-afl-aflapproval
-        existing_destinations_policy: ignore
-  build-parameters:
-    no-source: true
-- name: fr-applium-afl-aflapproval-app-content
-  type: com.sap.application.content
-  path: .
-  requires:
-  - name: fr-applium-afl-aflapproval-repo-host
-    parameters:
-      content-target: true
-  build-parameters:
-    build-result: resources
+  - name: fr-applium-afl-aflapprovaldisc-destination-content
+    type: com.sap.application.content
     requires:
-    - artifacts:
-      - frappliumaflaflapproval.zip
-      name: frappliumaflaflapproval
-      target-path: resources/
-- name: frappliumaflaflapproval
-  type: html5
-  path: .
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-resources:
-- name: fr-applium-afl-aflapproval-destination-service
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      HTML5Runtime_enabled: true
-      init_data:
+      - name: fr-applium-afl-aflapprovaldisc-destination-service
+        parameters:
+          content-target: true
+      - name: fr-applium-afl-aflapprovaldisc-repo-host
+        parameters:
+          service-key:
+            name: fr-applium-afl-aflapprovaldisc-repo-host-key
+      - name: fr-applium-afl-aflapprovaldisc-uaa
+        parameters:
+          service-key:
+            name: fr-applium-afl-aflapprovaldisc-uaa-key
+    parameters:
+      content:
         instance:
           destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
-          existing_destinations_policy: update
-      version: 1.0.0
-    service: destination
-    service-name: fr-applium-afl-aflapproval-destination-service
-    service-plan: lite
-- name: fr-applium-afl-aflapproval-uaa
-  type: org.cloudfoundry.managed-service
-  parameters:
-    path: ./xs-security.json
-    service: xsuaa
-    service-name: fr-applium-afl-aflapproval-xsuaa-srv
-    service-plan: application
-- name: fr-applium-afl-aflapproval-repo-host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-name: fr-applium-afl-aflapproval-html5-srv
-    service-plan: app-host
+            - Name: fr-applium-afl-aflapprovaldisc_html_repo_host
+              ServiceInstanceName: fr-applium-afl-aflapprovaldisc-html5-srv
+              ServiceKeyName: fr-applium-afl-aflapprovaldisc-repo-host-key
+              sap.cloud.service: fr-applium-afl-aflapprovaldisc
+            - Authentication: OAuth2UserTokenExchange
+              Name: fr-applium-afl-aflapprovaldisc_uaa
+              ServiceInstanceName: fr-applium-afl-aflapprovaldisc-xsuaa-srv
+              ServiceKeyName: fr-applium-afl-aflapprovaldisc-uaa-key
+              sap.cloud.service: fr-applium-afl-aflapprovaldisc
+          existing_destinations_policy: ignore
+    build-parameters:
+      no-source: true
+  - name: fr-applium-afl-aflapprovaldisc-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: fr-applium-afl-aflapprovaldisc-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - frappliumaflaflapprovaldisc.zip
+          name: frappliumaflaflapprovaldisc
+          target-path: resources/
+  - name: frappliumaflaflapprovaldisc
+    type: html5
+    path: .
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+resources:
+  - name: fr-applium-afl-aflapprovaldisc-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: true
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+            existing_destinations_policy: update
+        version: 1.0.0
+      service: destination
+      service-name: fr-applium-afl-aflapprovaldisc-destination-service
+      service-plan: lite
+  - name: fr-applium-afl-aflapprovaldisc-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service: xsuaa
+      service-name: fr-applium-afl-aflapprovaldisc-xsuaa-srv
+      service-plan: application
+  - name: fr-applium-afl-aflapprovaldisc-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: fr-applium-afl-aflapprovaldisc-html5-srv
+      service-plan: app-host
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

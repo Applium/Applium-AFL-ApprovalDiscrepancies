@@ -25,7 +25,7 @@ sap.ui.define(
   ) {
     "use strict";
 
-    return BaseController.extend("fr.applium.afl.aflapproval.controller.List", {
+    return BaseController.extend("fr.applium.afl.aflapprovaldisc.controller.List", {
       formatter: formatter,
 
       /* =========================================================== */
@@ -188,7 +188,7 @@ sap.ui.define(
         if (!this.byId("viewSettingsDialog")) {
           Fragment.load({
             id: this.getView().getId(),
-            name: "fr.applium.afl.aflapproval.view.ViewSettingsDialog",
+            name: "fr.applium.afl.aflapprovaldisc.view.ViewSettingsDialog",
             controller: this,
           }).then(
             function (oDialog) {
@@ -291,7 +291,7 @@ sap.ui.define(
       onBeforeRebindTable: function (oEvent) {
         //Sort table
         var oBindingParameters = oEvent.getParameter("bindingParams"),
-          aExpand = oBindingParameters.parameters["expand"].split(","),
+          aExpand = oBindingParameters.parameters["expand"] ? oBindingParameters.parameters["expand"].split(",") : [],
           aSelect = oBindingParameters.parameters["select"].split(",");
         // Always expand documentPDF to get PDF key to open it
         aExpand.push("to_DocumentPDF");
@@ -515,7 +515,7 @@ sap.ui.define(
 //   ) {
 //     "use strict";
 
-//     return BaseController.extend("fr.applium.afl.aflapproval.controller.Master", {
+//     return BaseController.extend("fr.applium.afl.aflapprovaldisc.controller.Master", {
 //       formatter: formatter,
 //       _oVHDialogs: {},
 
@@ -981,7 +981,7 @@ sap.ui.define(
 //       _onCommentDisplay: function () {
 //         if (!this._oCommentDialog) {
 //           Fragment.load({
-//             name: "fr.applium.afl.aflapproval.view.fragment.CommentDialog",
+//             name: "fr.applium.afl.aflapprovaldisc.view.fragment.CommentDialog",
 //             id: this.getView().getId(),
 //             controller: this,
 //           }).then((oDialog) => {
@@ -1089,7 +1089,7 @@ sap.ui.define(
 //             },
 //           });
 //         Fragment.load({
-//           name: "fr.applium.afl.aflapproval.view.fragment." + oParameters.fragmentId,
+//           name: "fr.applium.afl.aflapprovaldisc.view.fragment." + oParameters.fragmentId,
 //           id: this.getView().getId(),
 //           controller: this,
 //         }).then((oDialog) => {

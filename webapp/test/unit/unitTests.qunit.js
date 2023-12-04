@@ -2,11 +2,9 @@
 QUnit.config.autostart = false;
 
 sap.ui.getCore().attachInit(function () {
-	"use strict";
+  "use strict";
 
-	sap.ui.require([
-		"fr/applium/afl/aflapproval/test/unit/AllTests"
-	], function () {
-		QUnit.start();
-	});
+  sap.ui.require(["fr/applium/afl/aflapprovaldisc/test/unit/AllTests"], function () {
+    QUnit.start();
+  });
 });

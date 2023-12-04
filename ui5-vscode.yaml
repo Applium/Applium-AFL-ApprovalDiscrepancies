@@ -2,7 +2,7 @@
 
 specVersion: "2.4"
 metadata:
-  name: fr.applium.afl.aflapproval
+  name: fr.applium.afl.aflapprovaldisc
 type: application
 server:
   customMiddleware:

@@ -3,16 +3,14 @@
 // * At least 3 Document in the list
 // * All 3 Document have at least one to_DocumentItem
 
-sap.ui.define([
-	"sap/ui/test/Opa5",
-	"./arrangements/Startup",
-	"./ListJourney",
-	"./NavigationJourney"
-], function (Opa5, Startup) {
-	"use strict";
-	Opa5.extendConfig({
-		arrangements: new Startup(),
-		viewNamespace: "fr.applium.afl.aflapproval.view.",
-		autoWait: true
-	});
-});
+sap.ui.define(
+  ["sap/ui/test/Opa5", "./arrangements/Startup", "./ListJourney", "./NavigationJourney"],
+  function (Opa5, Startup) {
+    "use strict";
+    Opa5.extendConfig({
+      arrangements: new Startup(),
+      viewNamespace: "fr.applium.afl.aflapprovaldisc.view.",
+      autoWait: true,
+    });
+  }
+);

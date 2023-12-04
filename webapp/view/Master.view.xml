@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="fr.applium.afl.aflapproval.controller.Master"
+    controllerName="fr.applium.afl.aflapprovaldisc.controller.Master"
     xmlns="sap.m"
     xmlns:semantic="sap.f.semantic"
     xmlns:mvc="sap.ui.core.mvc"
@@ -112,7 +112,7 @@
 						<ColumnListItem id="columnListItem" type="Navigation">
                         <cells>
                             <FlexBox alignItems="Center"
-                            justifyContent="Right"
+                            justifyContent="End"
                             >
                                 <Button 
                                 icon="sap-icon://pdf-attachment"

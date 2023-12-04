@@ -2,7 +2,7 @@
 
 specVersion: "2.5"
 metadata:
-  name: fr.applium.afl.aflapproval
+  name: fr.applium.afl.aflapprovaldisc
 type: application
 framework:
   name: SAPUI5
@@ -45,5 +45,5 @@ server:
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
-        component: fr.applium.afl.aflapproval
+        component: fr.applium.afl.aflapprovaldisc
         ui5Theme: sap_fiori_3
