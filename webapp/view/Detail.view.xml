@@ -47,7 +47,6 @@
 				objectSubtitle=""
 				isObjectTitleAlwaysVisible="true"
 				isActionAreaAlwaysVisible="true"
-				headerDesign="Light"
 				showTitleSelector="false"
 				markFavorite="false"
 				markFlagged="false"
